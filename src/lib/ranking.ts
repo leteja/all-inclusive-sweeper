@@ -1,12 +1,18 @@
-import type { HotelSummary, SweeperConfig, TravelDeal, WatchlistHotel } from "./types";
+import type {
+  HotelSummary,
+  PriceDropAlert,
+  SweeperConfig,
+  TravelDeal,
+  WatchlistHotel,
+} from "./types";
 
 /** Kuo didesnis, tuo geresnis kainos ir kokybės balansas */
 export function calculateValueScore(
-  qualityScore: number,
+  guestRating: number,
   pricePerPerson: number
 ): number {
   if (pricePerPerson <= 0) return 0;
-  return Math.round((qualityScore / pricePerPerson) * 1000) / 10;
+  return Math.round((guestRating / pricePerPerson) * 1000) / 10;
 }
 
 export function isInTargetRange(
@@ -19,6 +25,12 @@ export function isInTargetRange(
   );
 }
 
+export function meetsQualityBar(hotel: WatchlistHotel, config: SweeperConfig): boolean {
+  return (
+    hotel.stars >= config.minStars && hotel.guestRating >= config.minGuestRating
+  );
+}
+
 export function pickBestDeal(deals: TravelDeal[]): TravelDeal | null {
   if (deals.length === 0) return null;
   return [...deals].sort((a, b) => b.valueScore - a.valueScore)[0];
@@ -26,9 +38,13 @@ export function pickBestDeal(deals: TravelDeal[]): TravelDeal | null {
 
 export function buildHotelSummaries(
   watchlist: WatchlistHotel[],
-  deals: TravelDeal[]
-): HotelSummary[] {
-  return watchlist.map((hotel) => {
+  deals: TravelDeal[],
+  previousPrices: Record<number, number>,
+  dropThreshold: number
+): { summaries: HotelSummary[]; drops: PriceDropAlert[] } {
+  const drops: PriceDropAlert[] = [];
+
+  const summaries = watchlist.map((hotel) => {
     const hotelDeals = deals.filter((d) => d.hotelId === hotel.hotelId);
     const cheapest =
       hotelDeals.length > 0
@@ -37,21 +53,40 @@ export function buildHotelSummaries(
           )
         : null;
 
+    const previousLowest = previousPrices[hotel.hotelId] ?? null;
+    let priceDropped = false;
+    let dropAmount = 0;
+
+    if (cheapest && previousLowest !== null) {
+      dropAmount = previousLowest - cheapest.pricePerPerson;
+      if (dropAmount >= dropThreshold) {
+        priceDropped = true;
+        drops.push({
+          hotelId: hotel.hotelId,
+          hotelName: hotel.name,
+          previousPrice: previousLowest,
+          newPrice: cheapest.pricePerPerson,
+          dropAmount,
+          deal: cheapest,
+        });
+      }
+    }
+
     return {
       hotelId: hotel.hotelId,
       name: hotel.name,
       url: hotel.url,
       resort: hotel.resort,
       stars: hotel.stars,
-      qualityScore: hotel.qualityScore,
+      guestRating: hotel.guestRating,
       note: hotel.note,
       cheapestDeal: cheapest,
       valueScore: cheapest?.valueScore ?? 0,
+      previousLowest,
+      priceDropped,
+      dropAmount,
     };
   });
-}
 
-export function parseHotelIdFromUrl(url: string): number | null {
-  const match = url.match(/[?&]id=(\d+)/);
-  return match ? Number(match[1]) : null;
+  return { summaries, drops };
 }

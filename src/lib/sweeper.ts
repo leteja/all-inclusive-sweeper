@@ -1,17 +1,19 @@
 import { loadConfig } from "./config";
-import {
-  buildHotelSummaries,
-  pickBestDeal,
-} from "./ranking";
-import { loadDeals, saveDeals } from "./store";
+import { meetsQualityBar, buildHotelSummaries, pickBestDeal } from "./ranking";
+import { loadPriceHistory, saveDeals, savePriceHistory } from "./store";
 import { searchHotelDeals } from "./tez-api";
 import type { ScanResult, TravelDeal } from "./types";
 
 export async function runSweep(): Promise<ScanResult> {
   const config = await loadConfig();
+  const previousPrices = await loadPriceHistory();
   const allDeals: TravelDeal[] = [];
 
-  for (const hotel of config.watchlist) {
+  const qualifiedHotels = config.watchlist.filter((h) =>
+    meetsQualityBar(h, config)
+  );
+
+  for (const hotel of qualifiedHotels) {
     try {
       const deals = await searchHotelDeals(config, hotel);
       allDeals.push(...deals);
@@ -23,24 +25,33 @@ export async function runSweep(): Promise<ScanResult> {
   const targetAlerts = allDeals.filter((d) => d.inTargetRange);
   const bestDeal = pickBestDeal(allDeals);
 
-  const hotelSummaries = buildHotelSummaries(config.watchlist, allDeals);
+  const { summaries, drops } = buildHotelSummaries(
+    qualifiedHotels,
+    allDeals,
+    previousPrices,
+    config.priceDropThreshold
+  );
+
   const scannedAt = new Date().toISOString();
 
   await saveDeals({
     deals: allDeals,
     targetAlerts,
     bestDeal,
-    hotelSummaries,
+    hotelSummaries: summaries,
     lastScanAt: scannedAt,
   });
 
+  await savePriceHistory(summaries);
+
   return {
     scannedAt,
-    hotelsScanned: config.watchlist.length,
+    hotelsScanned: qualifiedHotels.length,
     totalFound: allDeals.length,
     matchingDeals: allDeals,
     targetAlerts,
+    priceDrops: drops,
     bestDeal,
-    hotelSummaries,
+    hotelSummaries: summaries,
   };
 }

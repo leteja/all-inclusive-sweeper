@@ -17,6 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DEFAULT_WATCHLIST } from "@/lib/constants";
 import type {
   HotelSummary,
+  PriceDropAlert,
   ScanResult,
   SweeperConfig,
   TravelDeal,
@@ -38,6 +39,7 @@ export default function HomePage() {
   const [config, setConfig] = useState<SweeperConfig | null>(null);
   const [deals, setDeals] = useState<TravelDeal[]>([]);
   const [targetAlerts, setTargetAlerts] = useState<TravelDeal[]>([]);
+  const [priceDrops, setPriceDrops] = useState<PriceDropAlert[]>([]);
   const [bestDeal, setBestDeal] = useState<TravelDeal | null>(null);
   const [hotelSummaries, setHotelSummaries] = useState<HotelSummary[]>([]);
   const [lastScanAt, setLastScanAt] = useState<string | null>(null);
@@ -76,6 +78,7 @@ export default function HomePage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Paieška nepavyko");
       setScanResult(data as ScanResult);
+      setPriceDrops(data.priceDrops ?? []);
       await loadData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Paieškos klaida");
@@ -113,6 +116,7 @@ export default function HomePage() {
   }
 
   const alerts = scanResult?.targetAlerts ?? targetAlerts;
+  const drops = scanResult?.priceDrops ?? priceDrops;
   const recommended = scanResult?.bestDeal ?? bestDeal;
   const summaries = scanResult?.hotelSummaries ?? hotelSummaries;
 
@@ -129,7 +133,7 @@ export default function HomePage() {
                 All Inclusive Stebėtojas
               </h1>
               <p className="text-sm text-muted-foreground">
-                5 atrinkti viešbučiai · kokybė + kaina · 300–400 €/asm
+                5 kokybiški 5* viešbučiai · svečių įvertinimas ≥ 8.0
               </p>
             </div>
           </div>
@@ -139,7 +143,7 @@ export default function HomePage() {
             ) : (
               <Search className="mr-2 h-4 w-4" />
             )}
-            {scanning ? "Ieškoma..." : "Ieškoti dabar"}
+            {scanning ? "Ieškoma..." : "Tikrinti kainas"}
           </Button>
         </div>
       </header>
@@ -158,8 +162,25 @@ export default function HomePage() {
             <AlertTitle>Tikslinė kaina pasiekta!</AlertTitle>
             <AlertDescription>
               {alerts.length === 1
-                ? `Rastas pasiūlymas ${alerts[0].pricePerPerson} €/asm — ${alerts[0].hotelName}`
-                : `Rasti ${alerts.length} pasiūlymai jūsų 300–400 € biudžete!`}
+                ? `${alerts[0].hotelName} — ${alerts[0].pricePerPerson} €/asm (${alerts[0].departureDate})`
+                : `${alerts.length} pasiūlymai jūsų ${config.pricePerPersonMin}–${config.pricePerPersonMax} € biudžete!`}
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {drops.length > 0 && (
+          <Alert className="border-sky-300 bg-sky-50 text-sky-900">
+            <TrendingDown className="h-4 w-4 text-sky-700" />
+            <AlertTitle>Kaina nukrito!</AlertTitle>
+            <AlertDescription>
+              <ul className="mt-1 space-y-1">
+                {drops.map((d) => (
+                  <li key={d.hotelId}>
+                    <strong>{d.hotelName}</strong>: {d.previousPrice} →{" "}
+                    {d.newPrice} €/asm (−{d.dropAmount} €)
+                  </li>
+                ))}
+              </ul>
             </AlertDescription>
           </Alert>
         )}
@@ -172,9 +193,8 @@ export default function HomePage() {
                 <CardTitle>Rekomenduojamas variantas</CardTitle>
               </div>
               <CardDescription>
-                Geriausias kainos ir kokybės balansas (įvertinimas{" "}
-                {recommended.qualityScore}/10, balas{" "}
-                {recommended.valueScore})
+                Geriausias kokybės ir kainos balansas — svečių įvertinimas{" "}
+                {recommended.guestRating}/10, vertės balas {recommended.valueScore}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -197,8 +217,8 @@ export default function HomePage() {
             <div className="flex items-center justify-between text-sm text-muted-foreground">
               <span>
                 {lastScanAt
-                  ? `Paskutinė paieška: ${new Date(lastScanAt).toLocaleString("lt-LT")}`
-                  : "Dar nebuvo atlikta paieška"}
+                  ? `Paskutinė patikra: ${new Date(lastScanAt).toLocaleString("lt-LT")}`
+                  : "Dar nebuvo atlikta patikra"}
               </span>
               <Button variant="ghost" size="sm" onClick={loadData}>
                 <RefreshCw className="mr-1 h-4 w-4" />
@@ -207,18 +227,28 @@ export default function HomePage() {
             </div>
 
             <div className="grid gap-4">
-              {(summaries.length > 0 ? summaries : config.watchlist.map((h) => ({
-                hotelId: h.hotelId,
-                name: h.name,
-                url: h.url,
-                resort: h.resort,
-                stars: h.stars,
-                qualityScore: h.qualityScore,
-                note: h.note,
-                cheapestDeal: null,
-                valueScore: 0,
-              }))).map((summary) => (
-                <HotelSummaryCard key={summary.hotelId} summary={summary} targetMax={config.pricePerPersonMax} />
+              {(summaries.length > 0
+                ? summaries
+                : config.watchlist.map((h) => ({
+                    hotelId: h.hotelId,
+                    name: h.name,
+                    url: h.url,
+                    resort: h.resort,
+                    stars: h.stars,
+                    guestRating: h.guestRating,
+                    note: h.note,
+                    cheapestDeal: null,
+                    valueScore: 0,
+                    previousLowest: null,
+                    priceDropped: false,
+                    dropAmount: 0,
+                  }))
+              ).map((summary) => (
+                <HotelSummaryCard
+                  key={summary.hotelId}
+                  summary={summary}
+                  targetMax={config.pricePerPersonMax}
+                />
               ))}
             </div>
           </TabsContent>
@@ -230,8 +260,8 @@ export default function HomePage() {
                   <Search className="h-10 w-10 text-muted-foreground" />
                   <p className="text-lg font-medium">Pasiūlymų dar nėra</p>
                   <p className="max-w-md text-sm text-muted-foreground">
-                    Paspauskite „Ieškoti dabar“ — tikrinsime tik 5 atrinktus
-                    viešbučius.
+                    Paspauskite „Tikrinti kainas“ — stebėsime 5 atrinktus
+                    viešbučius ir pranešime, kai kaina kris.
                   </p>
                 </CardContent>
               </Card>
@@ -248,15 +278,15 @@ export default function HomePage() {
             <div className="grid gap-6 md:grid-cols-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>Tikslinė kaina</CardTitle>
+                  <CardTitle>Pranešimų nustatymai</CardTitle>
                   <CardDescription>
-                    Pranešime, kai kaina patenka į šį diapazoną
+                    Kada pranešti apie kainų pokyčius
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Min. €/asm</Label>
+                      <Label>Tikslas min. €/asm</Label>
                       <Input
                         type="number"
                         value={config.pricePerPersonMin}
@@ -269,7 +299,7 @@ export default function HomePage() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label>Max. €/asm</Label>
+                      <Label>Tikslas max. €/asm</Label>
                       <Input
                         type="number"
                         value={config.pricePerPersonMax}
@@ -282,33 +312,36 @@ export default function HomePage() {
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Min. nakvynės</Label>
-                      <Input
-                        type="number"
-                        value={config.nightsMin}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            nightsMin: Number(e.target.value),
-                          })
-                        }
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Max. nakvynės</Label>
-                      <Input
-                        type="number"
-                        value={config.nightsMax}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            nightsMax: Number(e.target.value),
-                          })
-                        }
-                      />
-                    </div>
+                  <div className="space-y-2">
+                    <Label>Kainos kritimo slenkstis (€/asm)</Label>
+                    <Input
+                      type="number"
+                      value={config.priceDropThreshold}
+                      onChange={(e) =>
+                        setConfig({
+                          ...config,
+                          priceDropThreshold: Number(e.target.value),
+                        })
+                      }
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Pranešti, kai kaina nukrenta bent šiuo dydžiu nuo
+                      ankstesnio minimumo
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Min. svečių įvertinimas (/10)</Label>
+                    <Input
+                      type="number"
+                      step="0.1"
+                      value={config.minGuestRating}
+                      onChange={(e) =>
+                        setConfig({
+                          ...config,
+                          minGuestRating: Number(e.target.value),
+                        })
+                      }
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label>Datų langas (dienų į priekį)</Label>
@@ -330,7 +363,7 @@ export default function HomePage() {
                 <CardHeader>
                   <CardTitle>Stebimi viešbučiai</CardTitle>
                   <CardDescription>
-                    Tik per šiuos 5 TEZ Tour puslapius ieškoma
+                    Tik 5* su svečių įvertinimu ≥ {config.minGuestRating}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -341,10 +374,13 @@ export default function HomePage() {
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-medium">{hotel.name}</span>
-                        <Badge variant="outline">
-                          <Star className="mr-1 h-3 w-3" />
-                          {hotel.qualityScore}
-                        </Badge>
+                        <div className="flex gap-1">
+                          <Badge variant="secondary">{hotel.stars}*</Badge>
+                          <Badge variant="outline">
+                            <Star className="mr-1 h-3 w-3" />
+                            {hotel.guestRating}
+                          </Badge>
+                        </div>
                       </div>
                       <p className="mt-1 text-xs text-muted-foreground">
                         {hotel.note}
@@ -397,21 +433,28 @@ function HotelSummaryCard({
   const overBudget = deal && deal.pricePerPerson > targetMax;
 
   return (
-    <Card>
+    <Card className={summary.priceDropped ? "border-sky-400 bg-sky-50/50" : ""}>
       <CardContent className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <h3 className="font-semibold">{summary.name}</h3>
             <Badge variant="secondary">{summary.stars}*</Badge>
-            <Badge variant="outline">Kokybė {summary.qualityScore}/10</Badge>
+            <Badge variant="outline">Svečiai {summary.guestRating}/10</Badge>
+            {summary.priceDropped && (
+              <Badge className="bg-sky-600">
+                <TrendingDown className="mr-1 h-3 w-3" />−{summary.dropAmount} €
+              </Badge>
+            )}
           </div>
-          <p className="text-sm text-muted-foreground">
-            {summary.resort} · {summary.note}
-          </p>
+          <p className="text-sm text-muted-foreground">{summary.note}</p>
           {deal && (
             <p className="text-sm">
-              Artimiausias: {deal.departureDate}, {deal.nights} n. ·{" "}
-              {deal.board}
+              Artimiausias: {deal.departureDate}, {deal.nights} n. · {deal.board}
+            </p>
+          )}
+          {summary.previousLowest !== null && deal && (
+            <p className="text-xs text-muted-foreground">
+              Ankstesnis minimumas: {summary.previousLowest} €/asm
             </p>
           )}
         </div>
@@ -428,9 +471,8 @@ function HotelSummaryCard({
                   </span>
                 </div>
                 {overBudget && (
-                  <p className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
-                    <TrendingDown className="h-3 w-3" />
-                    virš tikslo {deal.pricePerPerson - targetMax} €
+                  <p className="text-xs text-muted-foreground">
+                    +{deal.pricePerPerson - targetMax} € virš tikslo
                   </p>
                 )}
                 {deal.inTargetRange && (
@@ -495,7 +537,7 @@ function DealCard({
           </div>
         </div>
         <CardDescription>
-          {deal.resort}, {deal.country} · Kokybė {deal.qualityScore}/10
+          {deal.resort} · Svečiai {deal.guestRating}/10
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">

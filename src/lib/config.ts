@@ -19,6 +19,8 @@ export async function loadConfig(): Promise<SweeperConfig> {
       ...DEFAULT_CONFIG,
       ...parsed,
       watchlist: parsed.watchlist?.length ? parsed.watchlist : DEFAULT_CONFIG.watchlist,
+      minGuestRating: parsed.minGuestRating ?? DEFAULT_CONFIG.minGuestRating,
+      priceDropThreshold: parsed.priceDropThreshold ?? DEFAULT_CONFIG.priceDropThreshold,
     };
   } catch {
     const config = { ...DEFAULT_CONFIG };

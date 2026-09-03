@@ -15,6 +15,8 @@ export async function PUT(request: Request) {
       ...current,
       ...body,
       watchlist: body.watchlist ?? current.watchlist,
+      minGuestRating: body.minGuestRating ?? current.minGuestRating,
+      priceDropThreshold: body.priceDropThreshold ?? current.priceDropThreshold,
     };
     await saveConfig(merged);
     return NextResponse.json(merged);

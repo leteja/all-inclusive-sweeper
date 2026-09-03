@@ -5,7 +5,8 @@ export interface WatchlistHotel {
   resort: string;
   countryId: number;
   stars: number;
-  qualityScore: number;
+  /** Svečių įvertinimas 10 balų skalėje (Booking/TripAdvisor) */
+  guestRating: number;
   note: string;
 }
 
@@ -14,10 +15,12 @@ export interface SweeperConfig {
   pricePerPersonMin: number;
   pricePerPersonMax: number;
   minStars: number;
+  minGuestRating: number;
   nightsMin: number;
   nightsMax: number;
   departureCityId: number;
   dateRangeDays: number;
+  priceDropThreshold: number;
   watchlist: WatchlistHotel[];
 }
 
@@ -38,7 +41,7 @@ export interface TravelDeal {
   pricePerPerson: number;
   adults: number;
   departureCity: string;
-  qualityScore: number;
+  guestRating: number;
   valueScore: number;
   source: "tez-tour";
   foundAt: string;
@@ -51,10 +54,22 @@ export interface HotelSummary {
   url: string;
   resort: string;
   stars: number;
-  qualityScore: number;
+  guestRating: number;
   note: string;
   cheapestDeal: TravelDeal | null;
   valueScore: number;
+  previousLowest: number | null;
+  priceDropped: boolean;
+  dropAmount: number;
+}
+
+export interface PriceDropAlert {
+  hotelId: number;
+  hotelName: string;
+  previousPrice: number;
+  newPrice: number;
+  dropAmount: number;
+  deal: TravelDeal;
 }
 
 export interface ScanResult {
@@ -63,6 +78,7 @@ export interface ScanResult {
   totalFound: number;
   matchingDeals: TravelDeal[];
   targetAlerts: TravelDeal[];
+  priceDrops: PriceDropAlert[];
   bestDeal: TravelDeal | null;
   hotelSummaries: HotelSummary[];
 }

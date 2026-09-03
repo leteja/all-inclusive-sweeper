@@ -68,7 +68,7 @@ export function parseTezRow(
   const cityBlock = row[16] as [string, string] | undefined;
 
   const pricePerPerson = Math.round(totalPrice / adults);
-  const valueScore = calculateValueScore(hotel.qualityScore, pricePerPerson);
+  const valueScore = calculateValueScore(hotel.guestRating, pricePerPerson);
 
   return {
     id: buildDealId(row, hotel.hotelId),
@@ -87,7 +87,7 @@ export function parseTezRow(
     pricePerPerson,
     adults,
     departureCity: cityBlock?.[0] ?? "Vilnius",
-    qualityScore: hotel.qualityScore,
+    guestRating: hotel.guestRating,
     valueScore,
     source: "tez-tour",
     foundAt: new Date().toISOString(),

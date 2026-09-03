@@ -1,24 +1,24 @@
 # All Inclusive Stebėtojas
 
-Stebi **5 atrinktus** 4–5 žvaigždučių all inclusive viešbučius Turkijoje, lygina kainas ir rekomenduoja geriausią variantą pagal **kokybę ir kainą**. Praneša skydelyje, kai kaina patenka į **300–400 €/asm** diapazoną.
+Stebi **5 kokybiškus 5 žvaigždučių** all inclusive viešbučius Turkijoje. Viešbučiai atrinkti pagal **tikrus svečių įvertinimus** (≥ 8.0/10), ne tik oficialią kategoriją. Belpoint Beach ir panašūs pašalinti.
 
-## Stebimi viešbučiai (numatytieji)
+## Stebimi viešbučiai
 
-| Viešbutis | Kurortas | Kokybė | Kodėl atrinktas |
+| Viešbutis | Svečių įvertinimas | Kurortas | Kodėl atrinktas |
 |---|---|---|---|
-| [Belpoint Beach 4*](https://www.tez-tour.com/hotel.html?id=242482) | Kemeras | 7.8/10 | Pigiausias variantas |
-| [Beldibi Beach 4*](https://www.tez-tour.com/hotel.html?id=4117593) | Kemeras | 8.0/10 | Ramus, geras šeimoms |
-| [Bieno Club SVS 4*](https://www.tez-tour.com/hotel.html?id=57194) | Alanija | 8.2/10 | Populiarus, geras aptarnavimas |
-| [Garden Park Beldibi 4*](https://www.tez-tour.com/hotel.html?id=9001063) | Kemeras | 8.4/10 | Aukštesnė kokybė, baseinai |
-| [Campus Hill 5*](https://www.tez-tour.com/hotel.html?id=427996) | Alanija | 8.6/10 | 5* už 4* kainą |
+| [Dedeman Kemer Resort 5*](https://www.tez-tour.com/hotel.html?id=648058) | 8.5/10 | Kemeras | Patikimas 5*, geras aptarnavimas |
+| [White Lilyum 5*](https://www.tez-tour.com/hotel.html?id=9003188) | 8.3/10 | Kemeras | Daug kartotinių svečių, arti paplūdimio |
+| [Holiday Garden Resort 5*](https://www.tez-tour.com/hotel.html?id=42202) | 8.2/10 | Alanija | Plati teritorija, vandens parkas |
+| [Orange County Kemer 5*](https://www.tez-tour.com/hotel.html?id=42667) | 8.6/10 | Kemeras | 1-a linija, TripAdvisor 4.3/5 |
+| [Limak Limra 5*](https://www.tez-tour.com/hotel.html?id=14795) | 9.1/10 | Kemeras | Geriausia kokybė sąraše |
 
 ## Kaip veikia
 
-1. Ieško **tik** per šiuos 5 TEZ Tour puslapius (ne visą katalogą)
-2. Kiekvienam viešbučiui randa pigiausią datą artimiausioms 45 dienoms
-3. Skaičiuoja **vertės balą** = kokybė ÷ kaina (kuo didesnis, tuo geriau)
-4. Rekomenduoja **geriausią variantą** skydelyje
-5. **Žalias pranešimas**, kai kaina patenka į 300–400 €/asm
+1. Tikrina kainas **tik** per šiuos 5 TEZ Tour puslapius
+2. Rekomenduoja **geriausią variantą** (kokybė ÷ kaina)
+3. **Žalias pranešimas** — kai kaina patenka į 300–400 €/asm
+4. **Mėlynas pranešimas** — kai kaina nukrenta ≥ 15 € nuo ankstesnio minimumo
+5. Saugo kainų istoriją — kiekviena patikra lygina su ankstesniu minimumu
 
 ## Paleidimas
 
@@ -27,26 +27,19 @@ npm install
 npm run dev -- -p 4317
 ```
 
-Atidarykite [http://localhost:4317](http://localhost:4317).
-
 ## Automatinis stebėjimas
 
 ```bash
-# Kas valandą
-0 * * * * curl -X POST http://localhost:4317/api/scan
+# Kas 6 valandas
+0 */6 * * * curl -X POST http://localhost:4317/api/scan
 ```
+
+## Realistiškos lūkesčios
+
+Dabar šie viešbučiai kainuoja ~810–910 €/asm. 300–400 € realu pagauti ne sezono metu arba paskutinės minutės akcijose. Stebėtojas praneš, kai kaina kris — nereikia rankiniu tikrinti.
 
 ## API
 
-- `POST /api/scan` — paleisti paiešką
-- `GET /api/deals` — pasiūlymai, rekomendacija, pranešimai
-- `GET/PUT /api/config` — nustatymai ir watchlist
-
-## Realistiškos lūkesčiai
-
-Šiuo metu (rugsėjis) šie viešbučiai kainuoja ~540–680 €/asm. 300–400 € realu pagauti:
-- **Paskutinės minutės** (2–3 sav. prieš išvykimą)
-- **Ne sezonas** (balandis–gegužė, spalis–lapkritis)
-- **Ankstyvas booking** kitam sezonui
-
-Stebėtojas praneš, kai kaina nukris — nereikia rankiniu tikrinti.
+- `POST /api/scan` — patikrinti kainas
+- `GET /api/deals` — pasiūlymai, rekomendacija, kainų kritimai
+- `GET/PUT /api/config` — nustatymai
