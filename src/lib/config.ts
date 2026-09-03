@@ -14,9 +14,14 @@ export async function loadConfig(): Promise<SweeperConfig> {
   await ensureDataDir();
   try {
     const raw = await fs.readFile(CONFIG_PATH, "utf-8");
-    return { ...DEFAULT_CONFIG, ...JSON.parse(raw) } as SweeperConfig;
+    const parsed = JSON.parse(raw) as Partial<SweeperConfig>;
+    return {
+      ...DEFAULT_CONFIG,
+      ...parsed,
+      watchlist: parsed.watchlist?.length ? parsed.watchlist : DEFAULT_CONFIG.watchlist,
+    };
   } catch {
-    const config = { ...DEFAULT_CONFIG } as SweeperConfig;
+    const config = { ...DEFAULT_CONFIG };
     await saveConfig(config);
     return config;
   }

@@ -1,70 +1,46 @@
-import { DESTINATION_COUNTRIES } from "./constants";
 import { loadConfig } from "./config";
-import { sendTelegramNotification } from "./notifications";
-import { loadDeals, loadSeenIds, saveDeals, saveSeenIds } from "./store";
-import { searchTezDeals } from "./tez-api";
+import {
+  buildHotelSummaries,
+  pickBestDeal,
+} from "./ranking";
+import { loadDeals, saveDeals } from "./store";
+import { searchHotelDeals } from "./tez-api";
 import type { ScanResult, TravelDeal } from "./types";
 
 export async function runSweep(): Promise<ScanResult> {
   const config = await loadConfig();
-  const seenIds = await loadSeenIds();
   const allDeals: TravelDeal[] = [];
-  const newDeals: TravelDeal[] = [];
-  const countriesScanned: number[] = [];
 
-  for (const countryId of config.countryIds) {
-    const country = DESTINATION_COUNTRIES.find((c) => c.id === countryId);
-    const countryName = country?.name ?? `Šalis #${countryId}`;
-    countriesScanned.push(countryId);
-
+  for (const hotel of config.watchlist) {
     try {
-      const deals = await searchTezDeals(config, countryId, countryName);
-      for (const deal of deals) {
-        allDeals.push(deal);
-        if (!seenIds.has(deal.id)) {
-          newDeals.push({ ...deal, isNew: true });
-          seenIds.add(deal.id);
-        }
-      }
+      const deals = await searchHotelDeals(config, hotel);
+      allDeals.push(...deals);
     } catch (error) {
-      console.error(`Klaida skenuojant ${countryName}:`, error);
+      console.error(`Klaida skenuojant ${hotel.name}:`, error);
     }
   }
 
-  const uniqueDeals = dedupeDeals(allDeals).sort(
-    (a, b) => a.totalPrice - b.totalPrice
-  );
+  const targetAlerts = allDeals.filter((d) => d.inTargetRange);
+  const bestDeal = pickBestDeal(allDeals);
 
+  const hotelSummaries = buildHotelSummaries(config.watchlist, allDeals);
   const scannedAt = new Date().toISOString();
-  await saveDeals(uniqueDeals, scannedAt);
-  await saveSeenIds(seenIds);
 
-  const dealsToNotify = config.notifyOnlyNew ? newDeals : uniqueDeals;
-  let notificationsSent = 0;
-
-  try {
-    notificationsSent = await sendTelegramNotification(config, dealsToNotify);
-  } catch (error) {
-    console.error("Telegram pranešimo klaida:", error);
-  }
+  await saveDeals({
+    deals: allDeals,
+    targetAlerts,
+    bestDeal,
+    hotelSummaries,
+    lastScanAt: scannedAt,
+  });
 
   return {
     scannedAt,
-    countriesScanned,
-    totalFound: uniqueDeals.length,
-    matchingDeals: uniqueDeals,
-    newDeals,
-    notificationsSent,
+    hotelsScanned: config.watchlist.length,
+    totalFound: allDeals.length,
+    matchingDeals: allDeals,
+    targetAlerts,
+    bestDeal,
+    hotelSummaries,
   };
-}
-
-function dedupeDeals(deals: TravelDeal[]): TravelDeal[] {
-  const map = new Map<string, TravelDeal>();
-  for (const deal of deals) {
-    const existing = map.get(deal.id);
-    if (!existing || deal.totalPrice < existing.totalPrice) {
-      map.set(deal.id, deal);
-    }
-  }
-  return [...map.values()];
 }

@@ -1,20 +1,24 @@
 # All Inclusive Stebėtojas
 
-Automatinis all inclusive kelionių pasiūlymų stebėtojas 2 žmonėms. Ieško 4+ žvaigždučių viešbučių su viskas įskaičiuota maitinimu per TEZ Tour API ir praneša apie naujus pasiūlymus.
+Stebi **5 atrinktus** 4–5 žvaigždučių all inclusive viešbučius Turkijoje, lygina kainas ir rekomenduoja geriausią variantą pagal **kokybę ir kainą**. Praneša skydelyje, kai kaina patenka į **300–400 €/asm** diapazoną.
 
-## Rekomenduojami parametrai (300–400 €/asm)
+## Stebimi viešbučiai (numatytieji)
 
-| Parametras | Rekomendacija | Kodėl |
-|---|---|---|
-| Kaina | 300–400 €/asm (600–800 € už 2) | Visa kelionė su skrydžiu ir AI |
-| Žvaigždutės | 4+ | Geras komfortas jūsų biudžete |
-| Maitinimas | All Inclusive (AI) | Be papildomų išlaidų atostogų metu |
-| Trukmė | 7–10 nakvynių | Optimalus kainos/trukmės santykis |
-| Kryptys | Turkija, Egiptas | Realiausia pagauti 4* AI šiame diapazone |
-| Sezonas | Bal–geg, rugs–spalis | Pigiausia ne vasaros pikas |
-| Išvykimas | Vilnius (VNO) | Didžiausias pasirinkimas |
+| Viešbutis | Kurortas | Kokybė | Kodėl atrinktas |
+|---|---|---|---|
+| [Belpoint Beach 4*](https://www.tez-tour.com/hotel.html?id=242482) | Kemeras | 7.8/10 | Pigiausias variantas |
+| [Beldibi Beach 4*](https://www.tez-tour.com/hotel.html?id=4117593) | Kemeras | 8.0/10 | Ramus, geras šeimoms |
+| [Bieno Club SVS 4*](https://www.tez-tour.com/hotel.html?id=57194) | Alanija | 8.2/10 | Populiarus, geras aptarnavimas |
+| [Garden Park Beldibi 4*](https://www.tez-tour.com/hotel.html?id=9001063) | Kemeras | 8.4/10 | Aukštesnė kokybė, baseinai |
+| [Campus Hill 5*](https://www.tez-tour.com/hotel.html?id=427996) | Alanija | 8.6/10 | 5* už 4* kainą |
 
-**Svarbu:** Graikija, Ispanija ir Kanarai retai telpa į 300–400 €/asm su 4* AI, nebent paskutinės minutės arba ne sezonas.
+## Kaip veikia
+
+1. Ieško **tik** per šiuos 5 TEZ Tour puslapius (ne visą katalogą)
+2. Kiekvienam viešbučiui randa pigiausią datą artimiausioms 45 dienoms
+3. Skaičiuoja **vertės balą** = kokybė ÷ kaina (kuo didesnis, tuo geriau)
+4. Rekomenduoja **geriausią variantą** skydelyje
+5. **Žalias pranešimas**, kai kaina patenka į 300–400 €/asm
 
 ## Paleidimas
 
@@ -25,37 +29,24 @@ npm run dev -- -p 4317
 
 Atidarykite [http://localhost:4317](http://localhost:4317).
 
-## Naudojimas
-
-1. Atidarykite skydelį ir peržiūrėkite **Parametrų gidą**
-2. **Nustatymuose** pakoreguokite biudžetą, kryptis ir Telegram (nebūtina)
-3. Paspauskite **Ieškoti dabar** arba paleiskite automatiškai:
+## Automatinis stebėjimas
 
 ```bash
 # Kas valandą
 0 * * * * curl -X POST http://localhost:4317/api/scan
 ```
 
-## Telegram pranešimai
-
-1. Sukurkite botą per [@BotFather](https://t.me/BotFather)
-2. Gaukite `chat_id` (pvz. per [@userinfobot](https://t.me/userinfobot))
-3. Įjunkite Telegram nustatymuose skydelyje
-
-## Technologijos
-
-- Next.js + TypeScript + Tailwind + shadcn/ui
-- TEZ Tour vieša paieškos API (`search.tez-tour.com`)
-- Lokali duomenų saugykla (`data/config.json`, `data/deals.json`)
-
 ## API
 
 - `POST /api/scan` — paleisti paiešką
-- `GET /api/deals` — gauti rastus pasiūlymus
-- `GET/PUT /api/config` — nustatymai
+- `GET /api/deals` — pasiūlymai, rekomendacija, pranešimai
+- `GET/PUT /api/config` — nustatymai ir watchlist
 
-## Apribojimai
+## Realistiškos lūkesčiai
 
-- Šiuo metu stebima tik TEZ Tour (didžiausias LT organizatorius)
-- Kainos gali keistis realiu laiku — visada patikrinkite prieš rezervuojant
-- API grąžina iki 100 rezultatų per užklausą
+Šiuo metu (rugsėjis) šie viešbučiai kainuoja ~540–680 €/asm. 300–400 € realu pagauti:
+- **Paskutinės minutės** (2–3 sav. prieš išvykimą)
+- **Ne sezonas** (balandis–gegužė, spalis–lapkritis)
+- **Ankstyvas booking** kitam sezonui
+
+Stebėtojas praneš, kai kaina nukris — nereikia rankiniu tikrinti.

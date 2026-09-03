@@ -13,15 +13,16 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DEFAULT_WATCHLIST } from "@/lib/constants";
+import type {
+  HotelSummary,
+  ScanResult,
+  SweeperConfig,
+  TravelDeal,
+} from "@/lib/types";
 import {
-  DEPARTURE_CITIES,
-  DESTINATION_COUNTRIES,
-} from "@/lib/constants";
-import type { ScanResult, SweeperConfig, TravelDeal } from "@/lib/types";
-import {
+  Award,
   Bell,
   ExternalLink,
   Loader2,
@@ -29,11 +30,16 @@ import {
   RefreshCw,
   Search,
   Settings2,
+  Star,
+  TrendingDown,
 } from "lucide-react";
 
 export default function HomePage() {
   const [config, setConfig] = useState<SweeperConfig | null>(null);
   const [deals, setDeals] = useState<TravelDeal[]>([]);
+  const [targetAlerts, setTargetAlerts] = useState<TravelDeal[]>([]);
+  const [bestDeal, setBestDeal] = useState<TravelDeal | null>(null);
+  const [hotelSummaries, setHotelSummaries] = useState<HotelSummary[]>([]);
   const [lastScanAt, setLastScanAt] = useState<string | null>(null);
   const [scanning, setScanning] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -46,12 +52,12 @@ export default function HomePage() {
       fetch("/api/deals"),
     ]);
     const configData = (await configRes.json()) as SweeperConfig;
-    const dealsData = (await dealsRes.json()) as {
-      deals: TravelDeal[];
-      lastScanAt?: string;
-    };
+    const dealsData = await dealsRes.json();
     setConfig(configData);
     setDeals(dealsData.deals ?? []);
+    setTargetAlerts(dealsData.targetAlerts ?? []);
+    setBestDeal(dealsData.bestDeal ?? null);
+    setHotelSummaries(dealsData.hotelSummaries ?? []);
     setLastScanAt(dealsData.lastScanAt ?? null);
   }, []);
 
@@ -98,17 +104,6 @@ export default function HomePage() {
     }
   };
 
-  const toggleCountry = (countryId: number) => {
-    if (!config) return;
-    const exists = config.countryIds.includes(countryId);
-    setConfig({
-      ...config,
-      countryIds: exists
-        ? config.countryIds.filter((id) => id !== countryId)
-        : [...config.countryIds, countryId],
-    });
-  };
-
   if (!config) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-sky-50 to-white">
@@ -116,6 +111,10 @@ export default function HomePage() {
       </div>
     );
   }
+
+  const alerts = scanResult?.targetAlerts ?? targetAlerts;
+  const recommended = scanResult?.bestDeal ?? bestDeal;
+  const summaries = scanResult?.hotelSummaries ?? hotelSummaries;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-amber-50">
@@ -130,7 +129,7 @@ export default function HomePage() {
                 All Inclusive Stebėtojas
               </h1>
               <p className="text-sm text-muted-foreground">
-                2 žmonėms · 4+ žvaigždutės · viskas įskaičiuota
+                5 atrinkti viešbučiai · kokybė + kaina · 300–400 €/asm
               </p>
             </div>
           </div>
@@ -153,31 +152,48 @@ export default function HomePage() {
           </Alert>
         )}
 
-        {scanResult && (
-          <Alert>
-            <Bell className="h-4 w-4" />
-            <AlertTitle>Paieška baigta</AlertTitle>
+        {alerts.length > 0 && (
+          <Alert className="border-green-300 bg-green-50 text-green-900">
+            <Bell className="h-4 w-4 text-green-700" />
+            <AlertTitle>Tikslinė kaina pasiekta!</AlertTitle>
             <AlertDescription>
-              Rasta {scanResult.totalFound} atitinkančių pasiūlymų
-              {scanResult.newDeals.length > 0 &&
-                `, iš jų ${scanResult.newDeals.length} nauji`}
-              {scanResult.notificationsSent > 0 &&
-                `. Išsiųsta ${scanResult.notificationsSent} Telegram pranešimų.`}
+              {alerts.length === 1
+                ? `Rastas pasiūlymas ${alerts[0].pricePerPerson} €/asm — ${alerts[0].hotelName}`
+                : `Rasti ${alerts.length} pasiūlymai jūsų 300–400 € biudžete!`}
             </AlertDescription>
           </Alert>
         )}
 
-        <Tabs defaultValue="deals">
+        {recommended && (
+          <Card className="border-amber-300 bg-gradient-to-r from-amber-50 to-orange-50">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Award className="h-5 w-5 text-amber-600" />
+                <CardTitle>Rekomenduojamas variantas</CardTitle>
+              </div>
+              <CardDescription>
+                Geriausias kainos ir kokybės balansas (įvertinimas{" "}
+                {recommended.qualityScore}/10, balas{" "}
+                {recommended.valueScore})
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <DealCard deal={recommended} highlight />
+            </CardContent>
+          </Card>
+        )}
+
+        <Tabs defaultValue="hotels">
           <TabsList>
-            <TabsTrigger value="deals">Pasiūlymai ({deals.length})</TabsTrigger>
+            <TabsTrigger value="hotels">Viešbučiai ({summaries.length})</TabsTrigger>
+            <TabsTrigger value="deals">Visi pasiūlymai ({deals.length})</TabsTrigger>
             <TabsTrigger value="settings">
               <Settings2 className="mr-1 h-4 w-4" />
               Nustatymai
             </TabsTrigger>
-            <TabsTrigger value="guide">Parametrų gidas</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="deals" className="space-y-4">
+          <TabsContent value="hotels" className="space-y-4">
             <div className="flex items-center justify-between text-sm text-muted-foreground">
               <span>
                 {lastScanAt
@@ -190,14 +206,32 @@ export default function HomePage() {
               </Button>
             </div>
 
+            <div className="grid gap-4">
+              {(summaries.length > 0 ? summaries : config.watchlist.map((h) => ({
+                hotelId: h.hotelId,
+                name: h.name,
+                url: h.url,
+                resort: h.resort,
+                stars: h.stars,
+                qualityScore: h.qualityScore,
+                note: h.note,
+                cheapestDeal: null,
+                valueScore: 0,
+              }))).map((summary) => (
+                <HotelSummaryCard key={summary.hotelId} summary={summary} targetMax={config.pricePerPersonMax} />
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="deals" className="space-y-4">
             {deals.length === 0 ? (
               <Card>
                 <CardContent className="flex flex-col items-center gap-3 py-16 text-center">
                   <Search className="h-10 w-10 text-muted-foreground" />
                   <p className="text-lg font-medium">Pasiūlymų dar nėra</p>
                   <p className="max-w-md text-sm text-muted-foreground">
-                    Paspauskite „Ieškoti dabar“, kad pradėtumėte stebėti TEZ Tour
-                    pasiūlymus pagal jūsų kriterijus.
+                    Paspauskite „Ieškoti dabar“ — tikrinsime tik 5 atrinktus
+                    viešbučius.
                   </p>
                 </CardContent>
               </Card>
@@ -214,9 +248,9 @@ export default function HomePage() {
             <div className="grid gap-6 md:grid-cols-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>Biudžetas ir trukmė</CardTitle>
+                  <CardTitle>Tikslinė kaina</CardTitle>
                   <CardDescription>
-                    Kaina už vieną asmenį, visa kelionė su skrydžiu
+                    Pranešime, kai kaina patenka į šį diapazoną
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -277,19 +311,6 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label>Suaugusių</Label>
-                    <Input
-                      type="number"
-                      value={config.adults}
-                      onChange={(e) =>
-                        setConfig({
-                          ...config,
-                          adults: Number(e.target.value),
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="space-y-2">
                     <Label>Datų langas (dienų į priekį)</Label>
                     <Input
                       type="number"
@@ -307,107 +328,47 @@ export default function HomePage() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Kryptys ir pranešimai</CardTitle>
+                  <CardTitle>Stebimi viešbučiai</CardTitle>
                   <CardDescription>
-                    Pasirinkite šalis ir Telegram integraciją
+                    Tik per šiuos 5 TEZ Tour puslapius ieškoma
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    <Label>Šalys</Label>
-                    {DESTINATION_COUNTRIES.map((country) => (
-                      <label
-                        key={country.id}
-                        className="flex cursor-pointer items-start gap-3 rounded-lg border p-3 hover:bg-muted/50"
+                <CardContent className="space-y-3">
+                  {config.watchlist.map((hotel) => (
+                    <div
+                      key={hotel.hotelId}
+                      className="rounded-lg border p-3 text-sm"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{hotel.name}</span>
+                        <Badge variant="outline">
+                          <Star className="mr-1 h-3 w-3" />
+                          {hotel.qualityScore}
+                        </Badge>
+                      </div>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {hotel.note}
+                      </p>
+                      <a
+                        href={hotel.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-flex items-center gap-1 text-xs text-sky-600 hover:underline"
                       >
-                        <input
-                          type="checkbox"
-                          className="mt-1"
-                          checked={config.countryIds.includes(country.id)}
-                          onChange={() => toggleCountry(country.id)}
-                        />
-                        <div>
-                          <div className="font-medium">{country.name}</div>
-                          <div className="text-xs text-muted-foreground">
-                            {country.note}
-                          </div>
-                        </div>
-                      </label>
-                    ))}
-                  </div>
-
-                  <Separator />
-
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Tik nauji pasiūlymai</Label>
-                      <p className="text-xs text-muted-foreground">
-                        Telegram pranešti tik apie dar nematytus
-                      </p>
+                        <ExternalLink className="h-3 w-3" />
+                        tez-tour.com
+                      </a>
                     </div>
-                    <Switch
-                      checked={config.notifyOnlyNew}
-                      onCheckedChange={(checked) =>
-                        setConfig({ ...config, notifyOnlyNew: checked })
-                      }
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Telegram pranešimai</Label>
-                      <p className="text-xs text-muted-foreground">
-                        Reikia boto token ir chat ID
-                      </p>
-                    </div>
-                    <Switch
-                      checked={config.telegram.enabled}
-                      onCheckedChange={(checked) =>
-                        setConfig({
-                          ...config,
-                          telegram: { ...config.telegram, enabled: checked },
-                        })
-                      }
-                    />
-                  </div>
-
-                  {config.telegram.enabled && (
-                    <>
-                      <div className="space-y-2">
-                        <Label>Bot Token</Label>
-                        <Input
-                          type="password"
-                          placeholder="123456:ABC..."
-                          value={config.telegram.botToken}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              telegram: {
-                                ...config.telegram,
-                                botToken: e.target.value,
-                              },
-                            })
-                          }
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Chat ID</Label>
-                        <Input
-                          placeholder="-100..."
-                          value={config.telegram.chatId}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              telegram: {
-                                ...config.telegram,
-                                chatId: e.target.value,
-                              },
-                            })
-                          }
-                        />
-                      </div>
-                    </>
-                  )}
+                  ))}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() =>
+                      setConfig({ ...config, watchlist: [...DEFAULT_WATCHLIST] })
+                    }
+                  >
+                    Atstatyti numatytuosius
+                  </Button>
                 </CardContent>
               </Card>
             </div>
@@ -419,20 +380,94 @@ export default function HomePage() {
               </Button>
             </div>
           </TabsContent>
-
-          <TabsContent value="guide" className="space-y-4">
-            <GuideContent />
-          </TabsContent>
         </Tabs>
       </main>
     </div>
   );
 }
 
-function DealCard({ deal }: { deal: TravelDeal }) {
+function HotelSummaryCard({
+  summary,
+  targetMax,
+}: {
+  summary: HotelSummary;
+  targetMax: number;
+}) {
+  const deal = summary.cheapestDeal;
+  const overBudget = deal && deal.pricePerPerson > targetMax;
+
   return (
-    <Card className="overflow-hidden">
-      {deal.hotelImage && (
+    <Card>
+      <CardContent className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <h3 className="font-semibold">{summary.name}</h3>
+            <Badge variant="secondary">{summary.stars}*</Badge>
+            <Badge variant="outline">Kokybė {summary.qualityScore}/10</Badge>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            {summary.resort} · {summary.note}
+          </p>
+          {deal && (
+            <p className="text-sm">
+              Artimiausias: {deal.departureDate}, {deal.nights} n. ·{" "}
+              {deal.board}
+            </p>
+          )}
+        </div>
+        <div className="flex items-center gap-3">
+          {deal ? (
+            <>
+              <div className="text-right">
+                <div
+                  className={`text-2xl font-bold ${deal.inTargetRange ? "text-green-600" : overBudget ? "text-muted-foreground" : ""}`}
+                >
+                  {deal.pricePerPerson} €
+                  <span className="text-sm font-normal text-muted-foreground">
+                    /asm
+                  </span>
+                </div>
+                {overBudget && (
+                  <p className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
+                    <TrendingDown className="h-3 w-3" />
+                    virš tikslo {deal.pricePerPerson - targetMax} €
+                  </p>
+                )}
+                {deal.inTargetRange && (
+                  <p className="text-xs font-medium text-green-600">
+                    Tinka biudžetui!
+                  </p>
+                )}
+              </div>
+              <a
+                href={deal.hotelUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-8 items-center gap-1 rounded-lg border px-3 text-sm hover:bg-muted"
+              >
+                <ExternalLink className="h-4 w-4" />
+                Žiūrėti
+              </a>
+            </>
+          ) : (
+            <span className="text-sm text-muted-foreground">Nėra pasiūlymų</span>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function DealCard({
+  deal,
+  highlight = false,
+}: {
+  deal: TravelDeal;
+  highlight?: boolean;
+}) {
+  return (
+    <Card className={highlight ? "border-0 bg-transparent shadow-none" : "overflow-hidden"}>
+      {!highlight && deal.hotelImage && (
         <div className="relative h-40 w-full bg-muted">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -445,10 +480,22 @@ function DealCard({ deal }: { deal: TravelDeal }) {
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-2">
           <CardTitle className="text-base leading-snug">{deal.hotelName}</CardTitle>
-          <Badge variant="secondary">{deal.pricePerPerson} €/asm</Badge>
+          <div className="flex flex-col items-end gap-1">
+            <Badge
+              variant={deal.inTargetRange ? "default" : "secondary"}
+              className={deal.inTargetRange ? "bg-green-600" : ""}
+            >
+              {deal.pricePerPerson} €/asm
+            </Badge>
+            {deal.inTargetRange && (
+              <span className="text-xs font-medium text-green-600">
+                Tinka biudžetui
+              </span>
+            )}
+          </div>
         </div>
         <CardDescription>
-          {deal.resort}, {deal.country}
+          {deal.resort}, {deal.country} · Kokybė {deal.qualityScore}/10
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
@@ -467,7 +514,9 @@ function DealCard({ deal }: { deal: TravelDeal }) {
           </div>
           <div>
             <span className="text-muted-foreground">Viso</span>
-            <p className="font-medium">{deal.totalPrice} € ({deal.adults} asm.)</p>
+            <p className="font-medium">
+              {deal.totalPrice} € ({deal.adults} asm.)
+            </p>
           </div>
         </div>
         <a
@@ -481,88 +530,5 @@ function DealCard({ deal }: { deal: TravelDeal }) {
         </a>
       </CardContent>
     </Card>
-  );
-}
-
-function GuideContent() {
-  return (
-    <div className="grid gap-4 md:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle>Rekomenduojami parametrai jūsų biudžetui</CardTitle>
-          <CardDescription>300–400 €/asm · 4+ žvaigždutės · AI · 2 žmonės</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-3 text-sm leading-relaxed">
-          <p>
-            <strong>Biudžetas:</strong> 300–400 €/asm reiškia 600–800 € už
-            abu suaugusiuosius (visa kelionė su skrydžiu, pervežimu ir AI
-            maitinimu).
-          </p>
-          <p>
-            <strong>Geriausios kryptys:</strong> Turkija (Antalija, Alanya,
-            Kemer, Belek) ir Egiptas (Hurgada) — realiausia pagauti 4* AI šiame
-            diapazone. Bulgarija kartais telpa, bet AI retesnis.
-          </p>
-          <p>
-            <strong>Sunkesnės kryptys:</strong> Graikija, Ispanija, Kanarai —
-            4* AI dažniau 450–550 €+ / asm, nebent paskutinės minutės arba
-            ne sezonas.
-          </p>
-          <p>
-            <strong>Trukmė:</strong> 7–10 nakvynių optimalu. Trumpesnės
-            kelionės (5–6 n.) dažnai brangesnės už naktį.
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Kada ieškoti</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3 text-sm leading-relaxed">
-          <p>
-            <strong>Geriausias sezonas kainai:</strong> balandis–gegužė,
-            rugsėjis–spalis. Vasara (liepa–rugpjūtis) 4* AI retai telpa į
-            400 €.
-          </p>
-          <p>
-            <strong>Paskutinės minutės:</strong> 2–4 savaitės iki išvykimo
-            dažnai geriausios akcijos. Stebėtojas tikrina artimiausias{" "}
-            <em>45 dienas</em> — galite padidinti iki 60–90.
-          </p>
-          <p>
-            <strong>Išvykimas:</strong> Vilnius (VNO). Kaunas kartais pigesnis,
-            bet mažesnis pasirinkimas.
-          </p>
-          <p>
-            <strong>Ką filtruojame:</strong> 4+ žvaigždutės, viskas įskaičiuota
-            (AI), dvivietis kambarys, 2 suaugę.
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card className="md:col-span-2">
-        <CardHeader>
-          <CardTitle>Automatinis stebėjimas</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2 text-sm leading-relaxed">
-          <p>
-            Šis įrankis naudoja TEZ Tour viešą paieškos API. Paleiskite
-            periodiškai per cron arba GitHub Actions:
-          </p>
-          <pre className="overflow-x-auto rounded-lg bg-muted p-4 text-xs">
-{`# Kas valandą
-0 * * * * curl -X POST http://localhost:4317/api/scan
-
-# Arba su Telegram — įjunkite nustatymuose`}
-          </pre>
-          <p className="text-muted-foreground">
-            Išvykimo miestai:{" "}
-            {DEPARTURE_CITIES.map((c) => `${c.name} (${c.iata})`).join(", ")}.
-            Duomenys saugomi lokaliai <code>data/</code> aplanke.
-          </p>
-        </CardContent>
-      </Card>
-    </div>
   );
 }

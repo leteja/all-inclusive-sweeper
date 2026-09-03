@@ -9,9 +9,13 @@ export async function GET() {
 
 export async function PUT(request: Request) {
   try {
-    const body = (await request.json()) as SweeperConfig;
+    const body = (await request.json()) as Partial<SweeperConfig>;
     const current = await loadConfig();
-    const merged = { ...current, ...body, telegram: { ...current.telegram, ...body.telegram } };
+    const merged: SweeperConfig = {
+      ...current,
+      ...body,
+      watchlist: body.watchlist ?? current.watchlist,
+    };
     await saveConfig(merged);
     return NextResponse.json(merged);
   } catch (error) {

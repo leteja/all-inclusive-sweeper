@@ -1,3 +1,14 @@
+export interface WatchlistHotel {
+  hotelId: number;
+  name: string;
+  url: string;
+  resort: string;
+  countryId: number;
+  stars: number;
+  qualityScore: number;
+  note: string;
+}
+
 export interface SweeperConfig {
   adults: number;
   pricePerPersonMin: number;
@@ -6,18 +17,13 @@ export interface SweeperConfig {
   nightsMin: number;
   nightsMax: number;
   departureCityId: number;
-  countryIds: number[];
   dateRangeDays: number;
-  notifyOnlyNew: boolean;
-  telegram: {
-    enabled: boolean;
-    botToken: string;
-    chatId: string;
-  };
+  watchlist: WatchlistHotel[];
 }
 
 export interface TravelDeal {
   id: string;
+  hotelId: number;
   departureDate: string;
   nights: number;
   returnDate: string;
@@ -32,16 +38,31 @@ export interface TravelDeal {
   pricePerPerson: number;
   adults: number;
   departureCity: string;
+  qualityScore: number;
+  valueScore: number;
   source: "tez-tour";
   foundAt: string;
-  isNew?: boolean;
+  inTargetRange?: boolean;
+}
+
+export interface HotelSummary {
+  hotelId: number;
+  name: string;
+  url: string;
+  resort: string;
+  stars: number;
+  qualityScore: number;
+  note: string;
+  cheapestDeal: TravelDeal | null;
+  valueScore: number;
 }
 
 export interface ScanResult {
   scannedAt: string;
-  countriesScanned: number[];
+  hotelsScanned: number;
   totalFound: number;
   matchingDeals: TravelDeal[];
-  newDeals: TravelDeal[];
-  notificationsSent: number;
+  targetAlerts: TravelDeal[];
+  bestDeal: TravelDeal | null;
+  hotelSummaries: HotelSummary[];
 }
