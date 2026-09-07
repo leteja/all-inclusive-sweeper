@@ -38,13 +38,15 @@ import {
 
 const SOURCE_LABELS: Record<string, string> = {
   "tez-tour": "TEZ Tour",
+  "tez-ispardavimas": "TEZ Išpardavimas",
   novaturas: "Novaturas",
   westexpress: "West Express",
   joinup: "JoinUP",
   coral: "Coral Travel",
+  anextour: "Anex Tour",
+  itaka: "Itaka",
   pasirinksparnus: "Pasirink Sparnus",
   kelioniupanorama: "Kelionių Panorama",
-  "tez-ispardavimas": "TEZ Išpardavimas",
 };
 
 export default function HomePage() {

@@ -50,15 +50,16 @@ Jei kainos pasikeitė, Actions automatiškai commit'ina `data/deals.json` į rep
 | Laikas | Kas |
 |---|---|
 | 18:00 UTC | GitHub Actions paleidžia `npm run scan` |
-| | Tikrina **TEZ Tour API** (5 viešbučiai, 90 dienų) |
+| | Tikrina **TEZ Tour API** (5 viešbučiai, 120 dienų) |
 | | Išsaugo rezultatus į `data/` |
-| | Jei kaina krito ar patenka į 300–400 € — sukuria **GitHub Issue** |
+| | Jei kaina **≤ 400 €/asm** — sukuria **GitHub Issue** su nuorodomis |
 
 ## 6. Pranešimai el. paštu
 
 1. GitHub → **Settings** → **Notifications**
 2. Įjunkite **Issues** → Email
-3. Kai sukurs Issue „🏖️ Kainų alertas“ — gausite laišką
+3. **Kasdien ~20:00** po patikrinimo: jei rasta kaina **≤ 400 €/asm**, gausite laišką su nuorodomis į TEZ ir kitas agentūras
+4. Jei visos kainos **virš 400 €** — laiškas **nesiunčiamas**
 
 ## 7. Peržiūrėti rezultatus
 
@@ -79,13 +80,15 @@ Atidarykite `http://localhost:4317` — duomenys skaitomi iš `data/deals.json`.
 | Šaltinis | Automatinis? | Pastaba |
 |---|---|---|
 | **TEZ Tour** | ✅ GitHub Actions | Vienintelis viešas API |
+| TEZ Išpardavimas | ❌ Nuoroda UI | Akcijos ir promo kodai |
 | Novaturas | ❌ Nuoroda UI | Kartais pigiau ne sezonu |
 | West Express | ❌ Nuoroda UI | Savaitės TOP akcijos |
 | JoinUP | ❌ Nuoroda UI | Paskutinės minutės |
 | Coral Travel | ❌ Nuoroda UI | |
+| Anex Tour | ❌ Nuoroda UI | |
+| Itaka | ❌ Nuoroda UI | |
 | Pasirink Sparnus | ❌ Nuoroda UI | |
 | Kelionių Panorama | ❌ Nuoroda UI | |
-| TEZ Išpardavimas | ❌ Nuoroda UI | Akcijos ir promo kodai |
 
 Kitos agentūros (Novaturas, West Express ir kt.) neturi viešo API — todėl UI rodo **nuorodas**, kurias galite atidaryti ir palyginti ranka.
 

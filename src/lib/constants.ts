@@ -92,7 +92,7 @@ export const DEFAULT_CONFIG: SweeperConfig = {
   nightsMin: 7,
   nightsMax: 10,
   departureCityId: 4800,
-  dateRangeDays: 90,
+  dateRangeDays: 120,
   priceDropThreshold: 15,
   watchlist: DEFAULT_WATCHLIST,
 };

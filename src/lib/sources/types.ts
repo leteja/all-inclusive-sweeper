@@ -6,6 +6,8 @@ export type PriceSourceId =
   | "westexpress"
   | "joinup"
   | "coral"
+  | "anextour"
+  | "itaka"
   | "pasirinksparnus"
   | "kelioniupanorama"
   | "tez-ispardavimas";

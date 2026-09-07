@@ -1,37 +1,12 @@
 import { writeFile } from "fs/promises";
+import { loadConfig } from "../src/lib/config";
+import { buildScanSummary } from "../src/lib/scan-summary";
 import { runSweep } from "../src/lib/sweeper";
 
 async function main() {
+  const config = await loadConfig();
   const result = await runSweep();
-
-  const summary = {
-    scannedAt: result.scannedAt,
-    hotelsScanned: result.hotelsScanned,
-    sourcesScanned: result.sourcesScanned,
-    totalFound: result.totalFound,
-    hasAlerts:
-      result.targetAlerts.length > 0 || result.priceDrops.length > 0,
-    bestDeal: result.bestDeal
-      ? {
-          hotel: result.bestDeal.hotelName,
-          pricePerPerson: result.bestDeal.pricePerPerson,
-          date: result.bestDeal.departureDate,
-          url: result.bestDeal.hotelUrl,
-        }
-      : null,
-    targetAlerts: result.targetAlerts.map((d) => ({
-      hotel: d.hotelName,
-      pricePerPerson: d.pricePerPerson,
-      date: d.departureDate,
-      url: d.hotelUrl,
-    })),
-    priceDrops: result.priceDrops.map((d) => ({
-      hotel: d.hotelName,
-      previousPrice: d.previousPrice,
-      newPrice: d.newPrice,
-      dropAmount: d.dropAmount,
-    })),
-  };
+  const summary = buildScanSummary(result, config);
 
   await writeFile(
     "data/last-scan-summary.json",
@@ -42,7 +17,13 @@ async function main() {
   console.log(JSON.stringify(summary, null, 2));
 
   if (summary.hasAlerts) {
-    console.log("\n*** RASTOS NUOLAIDOS ARBA TIKSLINĖ KAINA ***");
+    console.log(
+      `\n*** RASTA KAINA ≤ ${config.pricePerPersonMax} €/ASM — bus siunčiamas el. laiškas ***`
+    );
+  } else {
+    console.log(
+      `\nKainų ≤ ${config.pricePerPersonMax} €/asm nerasta — el. laiškas nesiunčiamas.`
+    );
   }
 }
 

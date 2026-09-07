@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   scan:
@@ -38,14 +39,15 @@ jobs:
             git push
           fi
 
-      - name: Sukurti GitHub Issue, jei rasta gera kaina
+      - name: El. laiškas tik kai kaina ≤ 400 €/asm
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          HAS_ALERTS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('data/last-scan-summary.json','utf8')).hasAlerts)")
-          if [ "$HAS_ALERTS" = "true" ]; then
-            gh issue create \
-              --title "🏖️ Kainų alertas — $(date -u +%Y-%m-%d)" \
-              --body "Automatinis vakarinis skenavimas rado pasiūlymus jūsų biudžete arba kainų kritimą. Peržiūrėkite [Actions log](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})." \
-              || echo "Nepavyko sukurti issue."
+          npx tsx scripts/create-alert-issue.ts | tee /tmp/alert.log
+          if grep -q "SKIP_ISSUE=1" /tmp/alert.log; then
+            echo "Kainų virš 400 €/asm arba jų nėra — el. laiškas nesiunčiamas."
+            exit 0
           fi
+          gh issue create \
+            --title "$(cat .github-alert-title.txt)" \
+            --body-file .github-alert-body.md

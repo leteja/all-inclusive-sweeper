@@ -5,10 +5,15 @@ function encodeQuery(value: string): string {
   return encodeURIComponent(value.trim());
 }
 
-/** Rankinės paieškos nuorodos į kitas LT kelionių agentūras */
+function hotelKeyword(hotel: WatchlistHotel): string {
+  return hotel.searchKeyword ?? hotel.name.replace(/\s+\d\*.*$/, "").trim();
+}
+
+/** Rankinės paieškos nuorodos į LT kelionių agentūras (be TEZ API) */
 export function getCompareLinks(hotel: WatchlistHotel): CompareLink[] {
-  const keyword = hotel.searchKeyword ?? hotel.name.replace(/\s+\d\*.*$/, "");
+  const keyword = hotelKeyword(hotel);
   const q = encodeQuery(keyword);
+  const qPlus = encodeQuery(keyword.replace(/\s+/g, "+"));
 
   const links: Array<Omit<CompareLink, "automated"> & { automated?: boolean }> = [
     {
@@ -18,6 +23,11 @@ export function getCompareLinks(hotel: WatchlistHotel): CompareLink[] {
       automated: true,
     },
     {
+      sourceId: "tez-ispardavimas",
+      name: "TEZ Išpardavimas",
+      url: "https://ispardavimas.teztour.lt/",
+    },
+    {
       sourceId: "novaturas",
       name: "Novaturas",
       url: `https://www.novaturas.lt/country/TR?search=${q}`,
@@ -25,32 +35,37 @@ export function getCompareLinks(hotel: WatchlistHotel): CompareLink[] {
     {
       sourceId: "westexpress",
       name: "West Express",
-      url: `https://www.westexpress.lt/kelione-i-turkija?search=${q}`,
+      url: `https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=${q}`,
     },
     {
       sourceId: "joinup",
       name: "JoinUP",
-      url: `https://joinup.lt/lt/search-tour?destination=turkey`,
+      url: `https://joinup.lt/lt/search-tour?destination=turkey&query=${qPlus}`,
     },
     {
       sourceId: "coral",
       name: "Coral Travel",
-      url: `https://www.coraltravel.lt/`,
+      url: `https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=${q}`,
+    },
+    {
+      sourceId: "anextour",
+      name: "Anex Tour",
+      url: `https://www.anextour.lt/lt/search?query=${q}`,
+    },
+    {
+      sourceId: "itaka",
+      name: "Itaka",
+      url: `https://www.itaka.lt/paieska?q=${q}`,
     },
     {
       sourceId: "pasirinksparnus",
       name: "Pasirink Sparnus",
-      url: `https://www.pasirinksparnus.lt/kelione-i-turkija`,
+      url: `https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=${q}`,
     },
     {
       sourceId: "kelioniupanorama",
       name: "Kelionių Panorama",
-      url: `https://www.kelioniupanorama.lt/keliones/turkija/`,
-    },
-    {
-      sourceId: "tez-ispardavimas",
-      name: "TEZ Išpardavimas",
-      url: "https://ispardavimas.teztour.lt/",
+      url: `https://www.kelioniupanorama.lt/keliones/turkija/?search=${q}`,
     },
   ];
 
@@ -68,11 +83,13 @@ export const ALL_SOURCES: Array<{
   automated: boolean;
 }> = [
   { id: "tez-tour", name: "TEZ Tour", automated: true },
+  { id: "tez-ispardavimas", name: "TEZ Išpardavimas", automated: false },
   { id: "novaturas", name: "Novaturas", automated: false },
   { id: "westexpress", name: "West Express", automated: false },
   { id: "joinup", name: "JoinUP", automated: false },
   { id: "coral", name: "Coral Travel", automated: false },
+  { id: "anextour", name: "Anex Tour", automated: false },
+  { id: "itaka", name: "Itaka", automated: false },
   { id: "pasirinksparnus", name: "Pasirink Sparnus", automated: false },
   { id: "kelioniupanorama", name: "Kelionių Panorama", automated: false },
-  { id: "tez-ispardavimas", name: "TEZ Ispardavimas", automated: false },
 ];
