@@ -23,7 +23,7 @@ jobs:
       - name: Įdiegti priklausomybes
         run: npm ci
 
-      - name: Tikrinti TEZ kainas
+      - name: Tikrinti kainas (TEZ + kitų agentūrų nuorodos)
         run: npm run scan
 
       - name: Išsaugoti rezultatus repozitorijoje

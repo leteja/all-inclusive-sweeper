@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DEFAULT_WATCHLIST } from "@/lib/constants";
+import { getCompareLinks } from "@/lib/sources";
 import type {
   HotelSummary,
   PriceDropAlert,
@@ -34,6 +35,17 @@ import {
   Star,
   TrendingDown,
 } from "lucide-react";
+
+const SOURCE_LABELS: Record<string, string> = {
+  "tez-tour": "TEZ Tour",
+  novaturas: "Novaturas",
+  westexpress: "West Express",
+  joinup: "JoinUP",
+  coral: "Coral Travel",
+  pasirinksparnus: "Pasirink Sparnus",
+  kelioniupanorama: "Kelionių Panorama",
+  "tez-ispardavimas": "TEZ Išpardavimas",
+};
 
 export default function HomePage() {
   const [config, setConfig] = useState<SweeperConfig | null>(null);
@@ -133,7 +145,7 @@ export default function HomePage() {
                 All Inclusive Stebėtojas
               </h1>
               <p className="text-sm text-muted-foreground">
-                5 geriausi įvertinimai su mažiausiomis TEZ kainomis · ≥ 8.0/10
+                TEZ automatiškai + 7 kitų agentūrų nuorodos · ≥ 8.0/10
               </p>
             </div>
           </div>
@@ -155,6 +167,15 @@ export default function HomePage() {
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
+
+        <Alert className="border-sky-200 bg-sky-50 text-sky-950">
+          <AlertTitle>Šaltiniai</AlertTitle>
+          <AlertDescription>
+            <strong>Automatiškai</strong> (GitHub Actions vakare): TEZ Tour API.
+            <strong> Rankiniu būdu</strong> — nuorodos į Novaturas, West Express,
+            JoinUP, Coral ir kt. po kiekvienu viešbučiu (kartais ten pigiau).
+          </AlertDescription>
+        </Alert>
 
         <Alert className="border-amber-200 bg-amber-50 text-amber-950">
           <AlertTitle>Realistiškos lūkesčios dėl 400 €</AlertTitle>
@@ -252,6 +273,7 @@ export default function HomePage() {
                     previousLowest: null,
                     priceDropped: false,
                     dropAmount: 0,
+                    compareLinks: getCompareLinks(h),
                   }))
               ).map((summary) => (
                 <HotelSummaryCard
@@ -468,6 +490,27 @@ function HotelSummaryCard({
               Ankstesnis minimumas: {summary.previousLowest} €/asm
             </p>
           )}
+          {(summary.compareLinks ?? []).length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {(summary.compareLinks ?? []).map((link) => (
+                <a
+                  key={link.sourceId}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs hover:bg-muted ${
+                    link.automated ? "border-sky-300 bg-sky-50" : ""
+                  }`}
+                >
+                  <ExternalLink className="h-3 w-3" />
+                  {link.name}
+                  {link.automated && (
+                    <span className="text-[10px] text-sky-600">auto</span>
+                  )}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-3">
           {deal ? (
@@ -491,6 +534,9 @@ function HotelSummaryCard({
                     Tinka biudžetui!
                   </p>
                 )}
+                <p className="text-xs text-muted-foreground">
+                  {SOURCE_LABELS[deal.source] ?? deal.source}
+                </p>
               </div>
               <a
                 href={deal.hotelUrl}
@@ -548,7 +594,8 @@ function DealCard({
           </div>
         </div>
         <CardDescription>
-          {deal.resort} · Svečiai {deal.guestRating}/10
+          {deal.resort} · Svečiai {deal.guestRating}/10 ·{" "}
+          {SOURCE_LABELS[deal.source] ?? deal.source}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">

@@ -7,6 +7,7 @@ async function main() {
   const summary = {
     scannedAt: result.scannedAt,
     hotelsScanned: result.hotelsScanned,
+    sourcesScanned: result.sourcesScanned,
     totalFound: result.totalFound,
     hasAlerts:
       result.targetAlerts.length > 0 || result.priceDrops.length > 0,

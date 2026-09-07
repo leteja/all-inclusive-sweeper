@@ -1,8 +1,14 @@
 import { loadConfig } from "./config";
 import { meetsQualityBar, buildHotelSummaries, pickBestDeal } from "./ranking";
+import { AUTOMATED_SOURCES } from "./sources";
 import { loadPriceHistory, saveDeals, savePriceHistory } from "./store";
-import { searchHotelDeals } from "./tez-api";
 import type { ScanResult, TravelDeal } from "./types";
+
+const SOURCE_DELAY_MS = 400;
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 export async function runSweep(): Promise<ScanResult> {
   const config = await loadConfig();
@@ -13,12 +19,20 @@ export async function runSweep(): Promise<ScanResult> {
     meetsQualityBar(h, config)
   );
 
+  const sourcesScanned = AUTOMATED_SOURCES.map((s) => s.name);
+
   for (const hotel of qualifiedHotels) {
-    try {
-      const deals = await searchHotelDeals(config, hotel);
-      allDeals.push(...deals);
-    } catch (error) {
-      console.error(`Klaida skenuojant ${hotel.name}:`, error);
+    for (const source of AUTOMATED_SOURCES) {
+      try {
+        const deals = await source.searchDeals(config, hotel);
+        allDeals.push(...deals);
+      } catch (error) {
+        console.error(
+          `Klaida [${source.name}] skenuojant ${hotel.name}:`,
+          error
+        );
+      }
+      await sleep(SOURCE_DELAY_MS);
     }
   }
 
@@ -40,6 +54,7 @@ export async function runSweep(): Promise<ScanResult> {
     bestDeal,
     hotelSummaries: summaries,
     lastScanAt: scannedAt,
+    sourcesScanned,
   });
 
   await savePriceHistory(summaries);
@@ -47,6 +62,7 @@ export async function runSweep(): Promise<ScanResult> {
   return {
     scannedAt,
     hotelsScanned: qualifiedHotels.length,
+    sourcesScanned,
     totalFound: allDeals.length,
     matchingDeals: allDeals,
     targetAlerts,

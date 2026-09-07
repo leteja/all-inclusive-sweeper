@@ -12,6 +12,7 @@ export interface DealsFile {
   bestDeal: TravelDeal | null;
   hotelSummaries: HotelSummary[];
   lastScanAt?: string;
+  sourcesScanned?: string[];
 }
 
 export type PriceHistory = Record<number, number>;

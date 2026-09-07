@@ -5,6 +5,7 @@ import type {
   TravelDeal,
   WatchlistHotel,
 } from "./types";
+import { getCompareLinks } from "./sources";
 
 /** Kuo didesnis, tuo geresnis kainos ir kokybės balansas */
 export function calculateValueScore(
@@ -85,6 +86,7 @@ export function buildHotelSummaries(
       previousLowest,
       priceDropped,
       dropAmount,
+      compareLinks: getCompareLinks(hotel),
     };
   });
 

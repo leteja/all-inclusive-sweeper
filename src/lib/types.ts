@@ -1,3 +1,7 @@
+import type { CompareLink, PriceSourceId } from "./sources/types";
+
+export type { CompareLink, PriceSourceId };
+
 export interface WatchlistHotel {
   hotelId: number;
   name: string;
@@ -8,6 +12,8 @@ export interface WatchlistHotel {
   /** Svečių įvertinimas 10 balų skalėje (Booking/TripAdvisor) */
   guestRating: number;
   note: string;
+  /** Paieškos raktinis žodis kitose agentūrose */
+  searchKeyword?: string;
 }
 
 export interface SweeperConfig {
@@ -43,7 +49,7 @@ export interface TravelDeal {
   departureCity: string;
   guestRating: number;
   valueScore: number;
-  source: "tez-tour";
+  source: PriceSourceId;
   foundAt: string;
   inTargetRange?: boolean;
 }
@@ -61,6 +67,7 @@ export interface HotelSummary {
   previousLowest: number | null;
   priceDropped: boolean;
   dropAmount: number;
+  compareLinks: CompareLink[];
 }
 
 export interface PriceDropAlert {
@@ -75,6 +82,7 @@ export interface PriceDropAlert {
 export interface ScanResult {
   scannedAt: string;
   hotelsScanned: number;
+  sourcesScanned: string[];
   totalFound: number;
   matchingDeals: TravelDeal[];
   targetAlerts: TravelDeal[];
