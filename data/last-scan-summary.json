@@ -1,17 +1,230 @@
 {
-  "scannedAt": "2026-09-07T16:48:57.122Z",
+  "scannedAt": "2026-09-07T16:57:46.629Z",
   "hotelsScanned": 5,
   "sourcesScanned": [
     "TEZ Tour"
   ],
-  "totalFound": 851,
+  "totalFound": 403,
   "hasAlerts": false,
+  "pricePerPersonMax": 400,
   "bestDeal": {
     "hotel": "ROSE GARDEN PREMIUM 4 *",
-    "pricePerPerson": 670,
+    "pricePerPerson": 678,
     "date": "03.11.2026",
     "url": "https://www.tez-tour.com/hotel.html?id=7003264"
   },
   "targetAlerts": [],
-  "priceDrops": []
+  "priceDrops": [],
+  "compareLinksByHotel": [
+    {
+      "hotel": "Rose Garden Premium 4*",
+      "guestRating": 9,
+      "compareLinks": [
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/"
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Rose%20Garden%20Premium"
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Rose%20Garden%20Premium"
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Rose%2BGarden%2BPremium"
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Rose%20Garden%20Premium"
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Rose%20Garden%20Premium"
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Rose%20Garden%20Premium"
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Rose%20Garden%20Premium"
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Rose%20Garden%20Premium"
+        }
+      ]
+    },
+    {
+      "hotel": "Ramada Resort by Wyndham Side 4+",
+      "guestRating": 8.7,
+      "compareLinks": [
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/"
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side"
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side"
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Ramada%2BResort%2BSide"
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side"
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side"
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side"
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side"
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side"
+        }
+      ]
+    },
+    {
+      "hotel": "Club Hotel Belpinar 4*",
+      "guestRating": 8.3,
+      "compareLinks": [
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/"
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Club%20Hotel%20Belpinar"
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Club%20Hotel%20Belpinar"
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Club%2BHotel%2BBelpinar"
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Club%20Hotel%20Belpinar"
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Club%20Hotel%20Belpinar"
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Club%20Hotel%20Belpinar"
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Club%20Hotel%20Belpinar"
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Club%20Hotel%20Belpinar"
+        }
+      ]
+    },
+    {
+      "hotel": "Akdora Elite Hotel & Spa 4*",
+      "guestRating": 8,
+      "compareLinks": [
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/"
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Akdora%20Elite"
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Akdora%20Elite"
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Akdora%2BElite"
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Akdora%20Elite"
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Akdora%20Elite"
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Akdora%20Elite"
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Akdora%20Elite"
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Akdora%20Elite"
+        }
+      ]
+    },
+    {
+      "hotel": "Senza Grand Santana 5*",
+      "guestRating": 8.6,
+      "compareLinks": [
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/"
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Senza%20Grand%20Santana"
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Senza%20Grand%20Santana"
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Senza%2BGrand%2BSantana"
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Senza%20Grand%20Santana"
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Senza%20Grand%20Santana"
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Senza%20Grand%20Santana"
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Senza%20Grand%20Santana"
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Senza%20Grand%20Santana"
+        }
+      ]
+    }
+  ]
 }
