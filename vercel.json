@@ -1,0 +1,13 @@
+{
+  "crons": [
+    {
+      "path": "/api/scan",
+      "schedule": "0 18 * * *"
+    }
+  ],
+  "functions": {
+    "src/app/api/scan/route.ts": {
+      "maxDuration": 60
+    }
+  }
+}
