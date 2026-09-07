@@ -1,0 +1,64 @@
+{
+  "adults": 2,
+  "pricePerPersonMin": 300,
+  "pricePerPersonMax": 400,
+  "minStars": 4,
+  "minGuestRating": 8,
+  "nightsMin": 7,
+  "nightsMax": 10,
+  "departureCityId": 4800,
+  "dateRangeDays": 90,
+  "priceDropThreshold": 15,
+  "watchlist": [
+    {
+      "hotelId": 7003264,
+      "name": "Rose Garden Premium 4*",
+      "url": "https://www.tez-tour.com/hotel.html?id=7003264",
+      "resort": "Beldibi / Kemeras",
+      "countryId": 1104,
+      "stars": 4,
+      "guestRating": 9,
+      "note": "Geriausias kokybės/kainos balansas — 9.0/10, nuo ~678 €/asm lapkritį"
+    },
+    {
+      "hotelId": 4118481,
+      "name": "Ramada Resort by Wyndham Side 4+",
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "resort": "Sidė",
+      "countryId": 1104,
+      "stars": 4,
+      "guestRating": 8.7,
+      "note": "8.7/10 Booking, nuo ~678 €/asm ne sezonu (spalis–lapkritis)"
+    },
+    {
+      "hotelId": 14733,
+      "name": "Club Hotel Belpinar 4*",
+      "url": "https://www.tez-tour.com/hotel.html?id=14733",
+      "resort": "Beldibi / Kemeras",
+      "countryId": 1104,
+      "stars": 4,
+      "guestRating": 8.3,
+      "note": "TEZ nuo ~602 €/asm — dažnos akcijos, istoriškai iki ~300 €"
+    },
+    {
+      "hotelId": 386383,
+      "name": "Akdora Elite Hotel & Spa 4*",
+      "url": "https://www.tez-tour.com/hotel.html?id=386383",
+      "resort": "Sidė",
+      "countryId": 1104,
+      "stars": 4,
+      "guestRating": 8,
+      "note": "Nuo ~678 €/asm lapkritį, geras kainos/kokybės variantas Alanijoje"
+    },
+    {
+      "hotelId": 52579,
+      "name": "Senza Grand Santana 5*",
+      "url": "https://www.tez-tour.com/hotel.html?id=52579",
+      "resort": "Mahmutlar / Alanija",
+      "countryId": 1104,
+      "stars": 5,
+      "guestRating": 8.6,
+      "note": "5* UAI, 8.6/10 — brangesnis (~816 €), bet didesnis nuolaidų potencialas"
+    }
+  ]
+}

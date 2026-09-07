@@ -40,6 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local sweeper data
-data/
+# local sweeper data (track JSON scan results for GitHub Actions)
+data/*
+!data/*.json
 agent-tools/
