@@ -133,7 +133,7 @@ export default function HomePage() {
                 All Inclusive Stebėtojas
               </h1>
               <p className="text-sm text-muted-foreground">
-                5 kokybiški 5* viešbučiai · svečių įvertinimas ≥ 8.0
+                5 geriausi įvertinimai su mažiausiomis TEZ kainomis · ≥ 8.0/10
               </p>
             </div>
           </div>
@@ -155,6 +155,16 @@ export default function HomePage() {
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
+
+        <Alert className="border-amber-200 bg-amber-50 text-amber-950">
+          <AlertTitle>Realistiškos lūkesčios dėl 400 €</AlertTitle>
+          <AlertDescription>
+            TEZ ne sezonu (lapkritis) geriausi 8+ viešbučiai kainuoja nuo{" "}
+            <strong>~678 €/asm</strong>, ne 400 €. 400 € įmanoma tik su
+            akcijomis ar staigiais kritimais — stebėtojas praneš, kai kaina
+            kris ar pasieks jūsų tikslą.
+          </AlertDescription>
+        </Alert>
 
         {alerts.length > 0 && (
           <Alert className="border-green-300 bg-green-50 text-green-900">
@@ -260,8 +270,9 @@ export default function HomePage() {
                   <Search className="h-10 w-10 text-muted-foreground" />
                   <p className="text-lg font-medium">Pasiūlymų dar nėra</p>
                   <p className="max-w-md text-sm text-muted-foreground">
-                    Paspauskite „Tikrinti kainas“ — stebėsime 5 atrinktus
-                    viešbučius ir pranešime, kai kaina kris.
+                    Paspauskite „Tikrinti kainas“ — stebėsime 5 geriausiai
+                    įvertintus biudžetinius viešbučius ir pranešime, kai kaina
+                    kris.
                   </p>
                 </CardContent>
               </Card>
@@ -363,7 +374,7 @@ export default function HomePage() {
                 <CardHeader>
                   <CardTitle>Stebimi viešbučiai</CardTitle>
                   <CardDescription>
-                    Tik 5* su svečių įvertinimu ≥ {config.minGuestRating}
+                    4–5* AI su Booking įvertinimu ≥ {config.minGuestRating}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">

@@ -21,59 +21,60 @@ export const DEPARTURE_CITIES = [
 ] as const;
 
 /**
- * 5 atrinkti viešbučiai su tikrais svečių įvertinimais ≥ 8.0/10.
- * Belpoint Beach ir panašūs pašalinti — žemos apžvalgos (2–3 žv. realybėje).
+ * 5 geriausiai įvertinti viešbučiai su mažiausiomis TEZ kainomis (4–5* AI).
+ * Atrinkti pagal Booking įvertinimus ≥ 8.0 ir realų nuolaidų potencialą ne sezonu.
+ * 400 €/asm — siektina tikslas (akcijos, lapkritis–spalis); dabartinis minimumas ~678 €.
  */
 export const DEFAULT_WATCHLIST: WatchlistHotel[] = [
   {
-    hotelId: 648058,
-    name: "Dedeman Kemer Resort 5*",
-    url: "https://www.tez-tour.com/hotel.html?id=648058",
-    resort: "Kemeras",
+    hotelId: 7003264,
+    name: "Rose Garden Premium 4*",
+    url: "https://www.tez-tour.com/hotel.html?id=7003264",
+    resort: "Beldibi / Kemeras",
     countryId: TURKEY_COUNTRY_ID,
-    stars: 5,
-    guestRating: 8.5,
-    note: "Patikimas 5* Kemere, geras aptarnavimas, ~810 €/asm",
+    stars: 4,
+    guestRating: 9.0,
+    note: "Geriausias kokybės/kainos balansas — 9.0/10, nuo ~678 €/asm lapkritį",
   },
   {
-    hotelId: 9003188,
-    name: "White Lilyum Hotel 5*",
-    url: "https://www.tez-tour.com/hotel.html?id=9003188",
-    resort: "Kemeras",
+    hotelId: 4118481,
+    name: "Ramada Resort by Wyndham Side 4+",
+    url: "https://www.tez-tour.com/hotel.html?id=4118481",
+    resort: "Sidė",
     countryId: TURKEY_COUNTRY_ID,
-    stars: 5,
+    stars: 4,
+    guestRating: 8.7,
+    note: "8.7/10 Booking, nuo ~678 €/asm ne sezonu (spalis–lapkritis)",
+  },
+  {
+    hotelId: 14733,
+    name: "Club Hotel Belpinar 4*",
+    url: "https://www.tez-tour.com/hotel.html?id=14733",
+    resort: "Beldibi / Kemeras",
+    countryId: TURKEY_COUNTRY_ID,
+    stars: 4,
     guestRating: 8.3,
-    note: "Arti paplūdimio, daug kartotinių svečių, 8.3/10",
+    note: "TEZ nuo ~602 €/asm — dažnos akcijos, istoriškai iki ~300 €",
   },
   {
-    hotelId: 42202,
-    name: "Holiday Garden Resort 5*",
-    url: "https://www.tez-tour.com/hotel.html?id=42202",
-    resort: "Alanija",
+    hotelId: 386383,
+    name: "Akdora Elite Hotel & Spa 4*",
+    url: "https://www.tez-tour.com/hotel.html?id=386383",
+    resort: "Sidė",
     countryId: TURKEY_COUNTRY_ID,
-    stars: 5,
-    guestRating: 8.2,
-    note: "Plati teritorija, vandens parkas, 8.2/10",
+    stars: 4,
+    guestRating: 8.0,
+    note: "Nuo ~678 €/asm lapkritį, geras kainos/kokybės variantas Alanijoje",
   },
   {
-    hotelId: 42667,
-    name: "Orange County Kemer 5*",
-    url: "https://www.tez-tour.com/hotel.html?id=42667",
-    resort: "Kemeras",
+    hotelId: 52579,
+    name: "Senza Grand Santana 5*",
+    url: "https://www.tez-tour.com/hotel.html?id=52579",
+    resort: "Mahmutlar / Alanija",
     countryId: TURKEY_COUNTRY_ID,
     stars: 5,
     guestRating: 8.6,
-    note: "1-a linija, tematika, TripAdvisor 4.3/5",
-  },
-  {
-    hotelId: 14795,
-    name: "Limak Limra Hotel & Resort 5*",
-    url: "https://www.tez-tour.com/hotel.html?id=14795",
-    resort: "Kemeras",
-    countryId: TURKEY_COUNTRY_ID,
-    stars: 5,
-    guestRating: 9.1,
-    note: "Geriausia kokybė sąraše — 9.1/10, Zoover sidabras",
+    note: "5* UAI, 8.6/10 — brangesnis (~816 €), bet didesnis nuolaidų potencialas",
   },
 ];
 
@@ -86,7 +87,7 @@ export const DEFAULT_CONFIG: SweeperConfig = {
   nightsMin: 7,
   nightsMax: 10,
   departureCityId: 4800,
-  dateRangeDays: 45,
+  dateRangeDays: 90,
   priceDropThreshold: 15,
   watchlist: DEFAULT_WATCHLIST,
 };
