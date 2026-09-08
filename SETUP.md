@@ -111,3 +111,14 @@ Pavyzdžiai:
 **Push failed** — reikia `workflow` write teisių (žingsnis 3).
 
 **TEZ 429 klaida** — per daug užklausų; workflow bandys kitą dieną. Galite sumažinti `dateRangeDays` nustatymuose.
+
+**Nematau JoinUP kainų / tik TEZ rezultatai** — dažniausios priežastys:
+1. Senas kodas GitHub'e — lokaliai: `git pull`, tada `git push origin main`
+2. Actions nebuvo paleistas po atnaujinimo — **Actions → Run workflow**
+3. Žiūrite tik TEZ stulpelį — UI skirtuke „Viešbučiai“ žiūrėkite **„Kainos pagal agentūrą“**, arba „Visi pasiūlymai“ → filtras **„Tik JoinUP“** arba **„≤ 400 €/asm“**
+
+**Kodėl Novaturas / Coral / West Express neautomatiniai?**
+Šios svetainės naudoja bot apsaugą (Cloudflare, Imperva). Serverių užklausos iš GitHub Actions blokuojamos sąmoningai — tai ne konfigūracijos klaida. Alternatyvos:
+- **JoinUP** jau tikrinamas automatiškai (dažnai pigiau nei TEZ)
+- Rankinės nuorodos po kiekvieniu viešbučiu UI
+- Playwright naršyklės automatizacija — įmanoma, bet lėta (~10 min), brangi ir dažnai sulūžta kai svetainė atnaujinama

@@ -65,6 +65,12 @@ export interface HotelSummary {
   guestRating: number;
   note: string;
   cheapestDeal: TravelDeal | null;
+  /** Mažiausia kaina pagal šaltinį */
+  sourcePrices: Array<{
+    source: PriceSourceId;
+    pricePerPerson: number;
+    deal: TravelDeal;
+  }>;
   valueScore: number;
   previousLowest: number | null;
   priceDropped: boolean;

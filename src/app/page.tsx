@@ -57,6 +57,8 @@ export default function HomePage() {
   const [bestDeal, setBestDeal] = useState<TravelDeal | null>(null);
   const [hotelSummaries, setHotelSummaries] = useState<HotelSummary[]>([]);
   const [lastScanAt, setLastScanAt] = useState<string | null>(null);
+  const [sourcesScanned, setSourcesScanned] = useState<string[]>([]);
+  const [dealFilter, setDealFilter] = useState<"all" | "budget" | "joinup">("budget");
   const [scanning, setScanning] = useState(false);
   const [saving, setSaving] = useState(false);
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
@@ -75,6 +77,7 @@ export default function HomePage() {
     setBestDeal(dealsData.bestDeal ?? null);
     setHotelSummaries(dealsData.hotelSummaries ?? []);
     setLastScanAt(dealsData.lastScanAt ?? null);
+    setSourcesScanned(dealsData.sourcesScanned ?? []);
   }, []);
 
   useEffect(() => {
@@ -134,6 +137,20 @@ export default function HomePage() {
   const recommended = scanResult?.bestDeal ?? bestDeal;
   const summaries = scanResult?.hotelSummaries ?? hotelSummaries;
 
+  const sortedDeals = [...deals].sort(
+    (a, b) => a.pricePerPerson - b.pricePerPerson
+  );
+  const filteredDeals = sortedDeals.filter((deal) => {
+    if (dealFilter === "budget") {
+      return (
+        deal.inTargetRange ||
+        deal.pricePerPerson <= (config?.pricePerPersonMax ?? 400)
+      );
+    }
+    if (dealFilter === "joinup") return deal.source === "joinup";
+    return true;
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-amber-50">
       <header className="border-b bg-white/80 backdrop-blur">
@@ -147,7 +164,7 @@ export default function HomePage() {
                 All Inclusive Stebėtojas
               </h1>
               <p className="text-sm text-muted-foreground">
-                TEZ automatiškai + 7 kitų agentūrų nuorodos · ≥ 8.0/10
+                TEZ + JoinUP + Itaka automatiškai · kitos agentūros nuorodomis
               </p>
             </div>
           </div>
@@ -173,19 +190,29 @@ export default function HomePage() {
         <Alert className="border-sky-200 bg-sky-50 text-sky-950">
           <AlertTitle>Šaltiniai</AlertTitle>
           <AlertDescription>
-            <strong>Automatiškai</strong> (GitHub Actions vakare): TEZ Tour API.
-            <strong> Rankiniu būdu</strong> — nuorodos į Novaturas, West Express,
-            JoinUP, Coral ir kt. po kiekvienu viešbučiu (kartais ten pigiau).
+            <strong>Automatiškai</strong> (GitHub Actions ~20:00): TEZ Tour, JoinUP,
+            Itaka.
+            {sourcesScanned.length > 0 && (
+              <>
+                {" "}
+                Paskutinis skenavimas: {sourcesScanned.join(", ")}.
+              </>
+            )}
+            <br />
+            <strong>Rankiniu būdu</strong> (nuorodos po kiekvienu viešbučiu):
+            Novaturas, West Express, Coral — jų svetainės blokuoja serverių
+            užklausas, todėl ten reikia tikrinti per nuorodą.
           </AlertDescription>
         </Alert>
 
         <Alert className="border-amber-200 bg-amber-50 text-amber-950">
-          <AlertTitle>Realistiškos lūkesčios dėl 400 €</AlertTitle>
+          <AlertTitle>Kainos skiriasi tarp agentūrų</AlertTitle>
           <AlertDescription>
-            TEZ ne sezonu (lapkritis) geriausi 8+ viešbučiai kainuoja nuo{" "}
-            <strong>~678 €/asm</strong>, ne 400 €. 400 € įmanoma tik su
-            akcijomis ar staigiais kritimais — stebėtojas praneš, kai kaina
-            kris ar pasieks jūsų tikslą.
+            TEZ dažnai rodo <strong>brangesnes</strong> kainas (~600–800 €/asm).
+            <strong> JoinUP</strong> neretai turi pigesnius variantus — žiūrėkite
+            stulpelį „Kainos pagal agentūrą“ prie kiekvieno viešbučio. Jei nematote
+            JoinUP kainų, įsitikinkite kad nusiuntėte naujausią kodą į GitHub ir
+            paleidote Actions workflow.
           </AlertDescription>
         </Alert>
 
@@ -276,6 +303,7 @@ export default function HomePage() {
                     priceDropped: false,
                     dropAmount: 0,
                     compareLinks: getCompareLinks(h),
+                    sourcePrices: [],
                   }))
               ).map((summary) => (
                 <HotelSummaryCard
@@ -288,7 +316,31 @@ export default function HomePage() {
           </TabsContent>
 
           <TabsContent value="deals" className="space-y-4">
-            {deals.length === 0 ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
+                size="sm"
+                variant={dealFilter === "budget" ? "default" : "outline"}
+                onClick={() => setDealFilter("budget")}
+              >
+                ≤ {config.pricePerPersonMax} €/asm
+              </Button>
+              <Button
+                size="sm"
+                variant={dealFilter === "joinup" ? "default" : "outline"}
+                onClick={() => setDealFilter("joinup")}
+              >
+                Tik JoinUP
+              </Button>
+              <Button
+                size="sm"
+                variant={dealFilter === "all" ? "default" : "outline"}
+                onClick={() => setDealFilter("all")}
+              >
+                Visi ({deals.length})
+              </Button>
+            </div>
+
+            {filteredDeals.length === 0 ? (
               <Card>
                 <CardContent className="flex flex-col items-center gap-3 py-16 text-center">
                   <Search className="h-10 w-10 text-muted-foreground" />
@@ -302,7 +354,7 @@ export default function HomePage() {
               </Card>
             ) : (
               <div className="grid gap-4 md:grid-cols-2">
-                {deals.map((deal) => (
+                {filteredDeals.map((deal) => (
                   <DealCard key={deal.id} deal={deal} />
                 ))}
               </div>
@@ -486,6 +538,34 @@ function HotelSummaryCard({
             <p className="text-sm">
               Artimiausias: {deal.departureDate}, {deal.nights} n. · {deal.board}
             </p>
+          )}
+          {(summary.sourcePrices ?? []).length > 0 && (
+            <div className="mt-2 space-y-1">
+              <p className="text-xs font-medium text-muted-foreground">
+                Kainos pagal agentūrą (mažiausia / asm.):
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {(summary.sourcePrices ?? []).map((item) => (
+                  <a
+                    key={item.source}
+                    href={item.deal.hotelUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-xs hover:bg-muted ${
+                      item.deal.inTargetRange
+                        ? "border-green-400 bg-green-50 font-medium text-green-800"
+                        : item.source === "joinup"
+                          ? "border-sky-400 bg-sky-50"
+                          : ""
+                    }`}
+                  >
+                    <span>{SOURCE_LABELS[item.source] ?? item.source}</span>
+                    <span className="font-semibold">{item.pricePerPerson} €</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                ))}
+              </div>
+            </div>
           )}
           {summary.previousLowest !== null && deal && (
             <p className="text-xs text-muted-foreground">

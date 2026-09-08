@@ -5,6 +5,7 @@ import type {
   TravelDeal,
   WatchlistHotel,
 } from "./types";
+import type { PriceSourceId } from "./sources/types";
 import { getCompareLinks } from "./sources";
 
 /** Kuo didesnis, tuo geresnis kainos ir kokybės balansas */
@@ -47,6 +48,15 @@ export function buildHotelSummaries(
 
   const summaries = watchlist.map((hotel) => {
     const hotelDeals = deals.filter((d) => d.hotelId === hotel.hotelId);
+
+    const sourcePrices = new Map<PriceSourceId, TravelDeal>();
+    for (const deal of hotelDeals) {
+      const existing = sourcePrices.get(deal.source);
+      if (!existing || deal.pricePerPerson < existing.pricePerPerson) {
+        sourcePrices.set(deal.source, deal);
+      }
+    }
+
     const cheapest =
       hotelDeals.length > 0
         ? hotelDeals.reduce((min, d) =>
@@ -82,6 +92,13 @@ export function buildHotelSummaries(
       guestRating: hotel.guestRating,
       note: hotel.note,
       cheapestDeal: cheapest,
+      sourcePrices: [...sourcePrices.entries()]
+        .map(([source, deal]) => ({
+          source,
+          pricePerPerson: deal.pricePerPerson,
+          deal,
+        }))
+        .sort((a, b) => a.pricePerPerson - b.pricePerPerson),
       valueScore: cheapest?.valueScore ?? 0,
       previousLowest,
       priceDropped,
