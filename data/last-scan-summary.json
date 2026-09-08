@@ -1,5 +1,5 @@
 {
-  "scannedAt": "2026-09-08T18:30:15.350Z",
+  "scannedAt": "2026-09-08T18:38:04.480Z",
   "hotelsScanned": 5,
   "sourcesScanned": [
     "TEZ Tour",
@@ -13,7 +13,7 @@
     "hotel": "Akdora Elite Hotel & Spa 4*",
     "pricePerPerson": 181,
     "date": "30.10.2026",
-    "url": "https://joinup.lt/lt/hotel/55470?origins=2151&destinations=c_8&stay=7&pax_adl=2&board=1202&room=4019&date=2026-10-30"
+    "url": "https://joinup.lt/lt/tours?origins=2151&destinations=c_8&stays=7&pax_adl=2&hotel_ids=55470&dates=2026-10-30&board=1202&date=2026-10-30%3A2026-11-06"
   },
   "targetAlerts": [
     {
@@ -21,7 +21,7 @@
       "pricePerPerson": 360,
       "date": "18.10.2026",
       "nights": 7,
-      "url": "https://joinup.lt/lt/hotel/35385?origins=2151&destinations=c_8&stay=7&pax_adl=2&board=8&room=145&date=2026-10-18",
+      "url": "https://joinup.lt/lt/tours?origins=2151&destinations=c_8&stays=7&pax_adl=2&hotel_ids=35385&dates=2026-10-18&board=8&date=2026-10-18%3A2026-10-25",
       "source": "joinup",
       "compareLinks": [
         {
@@ -46,7 +46,7 @@
         },
         {
           "name": "JoinUP",
-          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Club%2BHotel%2BBelpinar",
+          "url": "https://joinup.lt/lt/tours?origins=2151&destinations=c_8&stays=7&pax_adl=2&hotel_ids=35385",
           "automated": true
         },
         {
@@ -81,7 +81,7 @@
       "pricePerPerson": 360,
       "date": "24.10.2026",
       "nights": 7,
-      "url": "https://joinup.lt/lt/hotel/35385?origins=2151&destinations=c_8&stay=7&pax_adl=2&board=8&room=145&date=2026-10-24",
+      "url": "https://joinup.lt/lt/tours?origins=2151&destinations=c_8&stays=7&pax_adl=2&hotel_ids=35385&dates=2026-10-24&board=8&date=2026-10-24%3A2026-10-31",
       "source": "joinup",
       "compareLinks": [
         {
@@ -106,7 +106,7 @@
         },
         {
           "name": "JoinUP",
-          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Club%2BHotel%2BBelpinar",
+          "url": "https://joinup.lt/lt/tours?origins=2151&destinations=c_8&stays=7&pax_adl=2&hotel_ids=35385",
           "automated": true
         },
         {
@@ -141,7 +141,7 @@
       "pricePerPerson": 320,
       "date": "12.10.2026",
       "nights": 7,
-      "url": "https://joinup.lt/lt/hotel/55470?origins=2151&destinations=c_8&stay=7&pax_adl=2&board=1202&room=4019&date=2026-10-12",
+      "url": "https://joinup.lt/lt/tours?origins=2151&destinations=c_8&stays=7&pax_adl=2&hotel_ids=55470&dates=2026-10-12&board=1202&date=2026-10-12%3A2026-10-19",
       "source": "joinup",
       "compareLinks": [
         {
@@ -166,7 +166,7 @@
         },
         {
           "name": "JoinUP",
-          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Akdora%2BElite",
+          "url": "https://joinup.lt/lt/tours?origins=2151&destinations=c_8&stays=7&pax_adl=2&hotel_ids=55470",
           "automated": true
         },
         {
@@ -201,7 +201,7 @@
       "pricePerPerson": 368,
       "date": "28.09.2026",
       "nights": 10,
-      "url": "https://joinup.lt/lt/hotel/55470?origins=2151&destinations=c_8&stay=10&pax_adl=2&board=1202&room=4019&date=2026-09-28",
+      "url": "https://joinup.lt/lt/tours?origins=2151&destinations=c_8&stays=10&pax_adl=2&hotel_ids=55470&dates=2026-09-28&board=1202&date=2026-09-28%3A2026-10-08",
       "source": "joinup",
       "compareLinks": [
         {
@@ -226,7 +226,7 @@
         },
         {
           "name": "JoinUP",
-          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Akdora%2BElite",
+          "url": "https://joinup.lt/lt/tours?origins=2151&destinations=c_8&stays=7&pax_adl=2&hotel_ids=55470",
           "automated": true
         },
         {

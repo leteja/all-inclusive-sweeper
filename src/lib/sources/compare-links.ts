@@ -1,4 +1,5 @@
 import type { WatchlistHotel } from "../types";
+import { buildJoinupHotelUrl } from "../joinup-api";
 import type { CompareLink, PriceSourceId } from "./types";
 
 function encodeQuery(value: string): string {
@@ -41,8 +42,8 @@ export function getCompareLinks(hotel: WatchlistHotel): CompareLink[] {
       sourceId: "joinup",
       name: "JoinUP",
       url: hotel.joinupHotelId
-        ? `https://joinup.lt/lt/hotel/${hotel.joinupHotelId}?origins=2151&destinations=c_8&pax_adl=2`
-        : `https://joinup.lt/lt/search-tour?destination=turkey&query=${qPlus}`,
+        ? buildJoinupHotelUrl(hotel.joinupHotelId)
+        : `https://joinup.lt/lt/tours?origins=2151&destinations=c_8&stays=7&pax_adl=2`,
       automated: true,
     },
     {

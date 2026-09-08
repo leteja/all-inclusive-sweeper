@@ -572,23 +572,23 @@ function HotelSummaryCard({
               Ankstesnis minimumas: {summary.previousLowest} €/asm
             </p>
           )}
-          {(summary.compareLinks ?? []).length > 0 && (
+          {(summary.compareLinks ?? []).filter((link) => !link.automated).length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1.5">
-              {(summary.compareLinks ?? []).map((link) => (
+              <p className="w-full text-xs text-muted-foreground">
+                Kitos agentūros (rankiniu būdu):
+              </p>
+              {(summary.compareLinks ?? [])
+                .filter((link) => !link.automated)
+                .map((link) => (
                 <a
                   key={link.sourceId}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs hover:bg-muted ${
-                    link.automated ? "border-sky-300 bg-sky-50" : ""
-                  }`}
+                  className="inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs hover:bg-muted"
                 >
                   <ExternalLink className="h-3 w-3" />
                   {link.name}
-                  {link.automated && (
-                    <span className="text-[10px] text-sky-600">auto</span>
-                  )}
                 </a>
               ))}
             </div>
@@ -705,10 +705,10 @@ function DealCard({
           href={deal.hotelUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-8 w-full items-center justify-center gap-2 rounded-lg border border-border bg-background px-2.5 text-sm font-medium hover:bg-muted"
+          className="inline-flex h-9 w-full items-center justify-center gap-2 rounded-lg border border-sky-300 bg-sky-50 px-2.5 text-sm font-medium text-sky-900 hover:bg-sky-100"
         >
           <ExternalLink className="h-4 w-4" />
-          Peržiūrėti {SOURCE_LABELS[deal.source] ?? deal.source}
+          Atidaryti {SOURCE_LABELS[deal.source] ?? deal.source} — {deal.pricePerPerson} €/asm
         </a>
       </CardContent>
     </Card>
