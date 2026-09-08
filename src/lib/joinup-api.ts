@@ -3,10 +3,16 @@ import { calculateValueScore, isInTargetRange } from "./ranking";
 import type { SweeperConfig, TravelDeal, WatchlistHotel } from "./types";
 
 const JOINUP_BASE = "https://joinup.lt/api/main";
+const JOINUP_REFERER = "https://joinup.lt/lt/tours";
 const TURKEY_DESTINATION = "c_8";
 const VILNIUS_ORIGIN = "2151";
-const REQUEST_DELAY_MS = 1000;
-const MAX_DATE_CHECKS = 10;
+/** Pilnos kelionės (su skrydžiu) kainos iš tour/offers — lėtesnis, bet teisingas */
+const REQUEST_DELAY_MS = 4000;
+const MAX_DATE_CHECKS = 5;
+
+const joinupFetchOptions: RequestInit = {
+  headers: { Referer: JOINUP_REFERER },
+};
 
 let cachedJoinupDates: string[] | null = null;
 
@@ -129,6 +135,7 @@ export function buildJoinupOfferUrl(
     stay: String(stay),
     pax_adl: String(adults),
     date,
+    offer_type: "tour",
   });
   if (boardCode) params.set("board", boardCode);
   if (roomCode) params.set("room", roomCode);
@@ -147,6 +154,7 @@ export function buildJoinupHotelUrl(
     destinations: TURKEY_DESTINATION,
     stay: String(stay),
     pax_adl: String(adults),
+    offer_type: "tour",
   });
   return `https://joinup.lt/lt/hotel/${joinupHotelId}?${params.toString()}`;
 }
@@ -231,7 +239,9 @@ export async function searchJoinupDeals(
 
       try {
         const payload = await fetchJson<JoinupHotelOffersResult>(
-          `${JOINUP_BASE}/hotel/offers?${params.toString()}`
+          `${JOINUP_BASE}/tour/offers?${params.toString()}`,
+          joinupFetchOptions,
+          5
         );
 
         for (const tour of payload.tours ?? []) {

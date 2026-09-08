@@ -25,7 +25,7 @@ export async function fetchJson<T>(
       });
 
       if (response.status === 429) {
-        await sleep(2000 * (attempt + 1));
+        await sleep(5000 * (attempt + 1));
         continue;
       }
 
@@ -39,7 +39,7 @@ export async function fetchJson<T>(
       };
 
       if (payload?.status === 429) {
-        await sleep(2000 * (attempt + 1));
+        await sleep(5000 * (attempt + 1));
         continue;
       }
 

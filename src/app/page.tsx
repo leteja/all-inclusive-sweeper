@@ -209,10 +209,9 @@ export default function HomePage() {
           <AlertTitle>Kainos skiriasi tarp agentūrų</AlertTitle>
           <AlertDescription>
             TEZ dažnai rodo <strong>brangesnes</strong> kainas (~600–800 €/asm).
-            <strong> JoinUP</strong> neretai turi pigesnius variantus — žiūrėkite
-            stulpelį „Kainos pagal agentūrą“ prie kiekvieno viešbučio. Jei nematote
-            JoinUP kainų, įsitikinkite kad nusiuntėte naujausią kodą į GitHub ir
-            paleidote Actions workflow.
+            <strong> JoinUP</strong> kainos su skrydžiu iš Vilniaus (ne tik
+            viešbutis). Anksčiau rodėme per žemą kainą — dabar naudojame pilnos
+            kelionės API.
           </AlertDescription>
         </Alert>
 
