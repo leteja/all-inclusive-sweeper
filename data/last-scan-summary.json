@@ -1,20 +1,282 @@
 {
-  "scannedAt": "2026-09-08T18:03:53.842Z",
+  "scannedAt": "2026-09-08T17:40:55.994Z",
   "hotelsScanned": 5,
   "sourcesScanned": [
-    "TEZ Tour"
+    "TEZ Tour",
+    "JoinUP",
+    "Itaka"
   ],
-  "totalFound": 294,
-  "hasAlerts": false,
+  "totalFound": 875,
+  "hasAlerts": true,
   "pricePerPersonMax": 400,
   "bestDeal": {
-    "hotel": "ROSE GARDEN PREMIUM 4 *",
-    "pricePerPerson": 684,
-    "date": "03.11.2026",
-    "url": "https://www.tez-tour.com/hotel.html?id=7003264"
+    "hotel": "Akdora Elite Hotel & Spa 4*",
+    "pricePerPerson": 181,
+    "date": "30.10.2026",
+    "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Akdora%20Elite"
   },
-  "targetAlerts": [],
-  "priceDrops": [],
+  "targetAlerts": [
+    {
+      "hotel": "Club Hotel Belpinar 4*",
+      "pricePerPerson": 360,
+      "date": "18.10.2026",
+      "nights": 7,
+      "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Club%20Hotel%20Belpinar",
+      "source": "joinup",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=14733",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Club%20Hotel%20Belpinar",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Club%20Hotel%20Belpinar",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Club%2BHotel%2BBelpinar",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Club%20Hotel%20Belpinar",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Club%20Hotel%20Belpinar",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Club%20Hotel%20Belpinar",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Club%20Hotel%20Belpinar",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Club%20Hotel%20Belpinar",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "Club Hotel Belpinar 4*",
+      "pricePerPerson": 360,
+      "date": "24.10.2026",
+      "nights": 7,
+      "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Club%20Hotel%20Belpinar",
+      "source": "joinup",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=14733",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Club%20Hotel%20Belpinar",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Club%20Hotel%20Belpinar",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Club%2BHotel%2BBelpinar",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Club%20Hotel%20Belpinar",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Club%20Hotel%20Belpinar",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Club%20Hotel%20Belpinar",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Club%20Hotel%20Belpinar",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Club%20Hotel%20Belpinar",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "Akdora Elite Hotel & Spa 4*",
+      "pricePerPerson": 320,
+      "date": "12.10.2026",
+      "nights": 7,
+      "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Akdora%20Elite",
+      "source": "joinup",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=386383",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Akdora%20Elite",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Akdora%20Elite",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Akdora%2BElite",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Akdora%20Elite",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Akdora%20Elite",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Akdora%20Elite",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Akdora%20Elite",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Akdora%20Elite",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "Akdora Elite Hotel & Spa 4*",
+      "pricePerPerson": 368,
+      "date": "28.09.2026",
+      "nights": 10,
+      "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Akdora%20Elite",
+      "source": "joinup",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=386383",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Akdora%20Elite",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Akdora%20Elite",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Akdora%2BElite",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Akdora%20Elite",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Akdora%20Elite",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Akdora%20Elite",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Akdora%20Elite",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Akdora%20Elite",
+          "automated": false
+        }
+      ]
+    }
+  ],
+  "priceDrops": [
+    {
+      "hotel": "Club Hotel Belpinar 4*",
+      "previousPrice": 966,
+      "newPrice": 360,
+      "dropAmount": 606
+    },
+    {
+      "hotel": "Akdora Elite Hotel & Spa 4*",
+      "previousPrice": 678,
+      "newPrice": 181,
+      "dropAmount": 497
+    },
+    {
+      "hotel": "Senza Grand Santana 5*",
+      "previousPrice": 798,
+      "newPrice": 748,
+      "dropAmount": 50
+    }
+  ],
   "compareLinksByHotel": [
     {
       "hotel": "Rose Garden Premium 4*",
@@ -33,20 +295,12 @@
           "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Rose%20Garden%20Premium"
         },
         {
-          "name": "JoinUP",
-          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Rose%2BGarden%2BPremium"
-        },
-        {
           "name": "Coral Travel",
           "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Rose%20Garden%20Premium"
         },
         {
           "name": "Anex Tour",
           "url": "https://www.anextour.lt/lt/search?query=Rose%20Garden%20Premium"
-        },
-        {
-          "name": "Itaka",
-          "url": "https://www.itaka.lt/paieska?q=Rose%20Garden%20Premium"
         },
         {
           "name": "Pasirink Sparnus",
@@ -75,20 +329,12 @@
           "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side"
         },
         {
-          "name": "JoinUP",
-          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Ramada%2BResort%2BSide"
-        },
-        {
           "name": "Coral Travel",
           "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side"
         },
         {
           "name": "Anex Tour",
           "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side"
-        },
-        {
-          "name": "Itaka",
-          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side"
         },
         {
           "name": "Pasirink Sparnus",
@@ -117,20 +363,12 @@
           "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Club%20Hotel%20Belpinar"
         },
         {
-          "name": "JoinUP",
-          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Club%2BHotel%2BBelpinar"
-        },
-        {
           "name": "Coral Travel",
           "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Club%20Hotel%20Belpinar"
         },
         {
           "name": "Anex Tour",
           "url": "https://www.anextour.lt/lt/search?query=Club%20Hotel%20Belpinar"
-        },
-        {
-          "name": "Itaka",
-          "url": "https://www.itaka.lt/paieska?q=Club%20Hotel%20Belpinar"
         },
         {
           "name": "Pasirink Sparnus",
@@ -159,20 +397,12 @@
           "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Akdora%20Elite"
         },
         {
-          "name": "JoinUP",
-          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Akdora%2BElite"
-        },
-        {
           "name": "Coral Travel",
           "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Akdora%20Elite"
         },
         {
           "name": "Anex Tour",
           "url": "https://www.anextour.lt/lt/search?query=Akdora%20Elite"
-        },
-        {
-          "name": "Itaka",
-          "url": "https://www.itaka.lt/paieska?q=Akdora%20Elite"
         },
         {
           "name": "Pasirink Sparnus",
@@ -201,20 +431,12 @@
           "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Senza%20Grand%20Santana"
         },
         {
-          "name": "JoinUP",
-          "url": "https://joinup.lt/lt/search-tour?destination=turkey&query=Senza%2BGrand%2BSantana"
-        },
-        {
           "name": "Coral Travel",
           "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Senza%20Grand%20Santana"
         },
         {
           "name": "Anex Tour",
           "url": "https://www.anextour.lt/lt/search?query=Senza%20Grand%20Santana"
-        },
-        {
-          "name": "Itaka",
-          "url": "https://www.itaka.lt/paieska?q=Senza%20Grand%20Santana"
         },
         {
           "name": "Pasirink Sparnus",

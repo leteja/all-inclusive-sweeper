@@ -41,6 +41,7 @@ export function getCompareLinks(hotel: WatchlistHotel): CompareLink[] {
       sourceId: "joinup",
       name: "JoinUP",
       url: `https://joinup.lt/lt/search-tour?destination=turkey&query=${qPlus}`,
+      automated: true,
     },
     {
       sourceId: "coral",
@@ -56,6 +57,7 @@ export function getCompareLinks(hotel: WatchlistHotel): CompareLink[] {
       sourceId: "itaka",
       name: "Itaka",
       url: `https://www.itaka.lt/paieska?q=${q}`,
+      automated: true,
     },
     {
       sourceId: "pasirinksparnus",
@@ -86,10 +88,10 @@ export const ALL_SOURCES: Array<{
   { id: "tez-ispardavimas", name: "TEZ Išpardavimas", automated: false },
   { id: "novaturas", name: "Novaturas", automated: false },
   { id: "westexpress", name: "West Express", automated: false },
-  { id: "joinup", name: "JoinUP", automated: false },
+  { id: "joinup", name: "JoinUP", automated: true },
   { id: "coral", name: "Coral Travel", automated: false },
   { id: "anextour", name: "Anex Tour", automated: false },
-  { id: "itaka", name: "Itaka", automated: false },
+  { id: "itaka", name: "Itaka", automated: true },
   { id: "pasirinksparnus", name: "Pasirink Sparnus", automated: false },
   { id: "kelioniupanorama", name: "Kelionių Panorama", automated: false },
 ];

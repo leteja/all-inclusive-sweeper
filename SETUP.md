@@ -50,7 +50,7 @@ Jei kainos pasikeitė, Actions automatiškai commit'ina `data/deals.json` į rep
 | Laikas | Kas |
 |---|---|
 | 18:00 UTC | GitHub Actions paleidžia `npm run scan` |
-| | Tikrina **TEZ Tour API** (5 viešbučiai, 120 dienų) |
+| | Tikrina **TEZ Tour**, **JoinUP** ir **Itaka** API (5 viešbučiai, 120 dienų) |
 | | Išsaugo rezultatus į `data/` |
 | | Jei kaina **≤ 400 €/asm** — sukuria **GitHub Issue** su nuorodomis |
 
@@ -79,18 +79,18 @@ Atidarykite `http://localhost:4317` — duomenys skaitomi iš `data/deals.json`.
 
 | Šaltinis | Automatinis? | Pastaba |
 |---|---|---|
-| **TEZ Tour** | ✅ GitHub Actions | Vienintelis viešas API |
-| TEZ Išpardavimas | ❌ Nuoroda UI | Akcijos ir promo kodai |
-| Novaturas | ❌ Nuoroda UI | Kartais pigiau ne sezonu |
-| West Express | ❌ Nuoroda UI | Savaitės TOP akcijos |
-| JoinUP | ❌ Nuoroda UI | Paskutinės minutės |
-| Coral Travel | ❌ Nuoroda UI | |
-| Anex Tour | ❌ Nuoroda UI | |
-| Itaka | ❌ Nuoroda UI | |
+| **TEZ Tour** | ✅ GitHub Actions | Viešas API |
+| **JoinUP** | ✅ GitHub Actions | Viešas API (`joinup.lt/api/main`) |
+| **Itaka** | ✅ GitHub Actions | SSR paieška (all-inclusive Turkija) |
+| Novaturas | ❌ Nuoroda UI | API apsaugotas — tik rankinė paieška |
+| West Express | ❌ Nuoroda UI | Cloudflare blokuoja automatizaciją |
+| Coral Travel | ❌ Nuoroda UI | Bot apsauga — tik rankinė paieška |
+| Anex Tour | ❌ Nuoroda UI | Reikia sesijos — tik rankinė paieška |
 | Pasirink Sparnus | ❌ Nuoroda UI | |
 | Kelionių Panorama | ❌ Nuoroda UI | |
+| TEZ Išpardavimas | ❌ Nuoroda UI | Akcijos ir promo kodai |
 
-Kitos agentūros (Novaturas, West Express ir kt.) neturi viešo API — todėl UI rodo **nuorodas**, kurias galite atidaryti ir palyginti ranka.
+**Kodėl ne visos agentūros automatinės?** Novaturas, Coral Travel ir West Express blokuoja serverių užklausas (bot apsauga). Todėl jų nuorodos rodomos UI ir el. laiške — galite patikrinti ranka vienu paspaudimu.
 
 ## Laiko keitimas
 

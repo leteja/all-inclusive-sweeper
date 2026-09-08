@@ -1,12 +1,19 @@
 import { getCompareLinks } from "./sources";
 import type { ScanResult, SweeperConfig, WatchlistHotel } from "./types";
 
+const SOURCE_LABELS: Record<string, string> = {
+  "tez-tour": "TEZ Tour",
+  joinup: "JoinUP",
+  itaka: "Itaka",
+};
+
 export interface TargetAlertSummary {
   hotel: string;
   pricePerPerson: number;
   date: string;
   nights: number;
   url: string;
+  source: string;
   compareLinks: Array<{
     name: string;
     url: string;
@@ -62,6 +69,7 @@ export function buildScanSummary(
         date: deal.departureDate,
         nights: deal.nights,
         url: deal.hotelUrl,
+        source: deal.source,
         compareLinks: compareLinks.map((link) => ({
           name: link.name,
           url: link.url,
@@ -121,7 +129,9 @@ export function buildAlertIssueBody(summary: ScanSummary): string {
   for (const alert of summary.targetAlerts) {
     lines.push(`### ${alert.hotel} — ${alert.pricePerPerson} €/asm`);
     lines.push(`- Išvykimas: **${alert.date}**, ${alert.nights} nakv.`);
-    lines.push(`- **[Rezervuoti TEZ Tour](${alert.url})**`);
+    lines.push(
+      `- **[Rezervuoti ${SOURCE_LABELS[alert.source] ?? alert.source}](${alert.url})**`
+    );
     const otherLinks = alert.compareLinks.filter((link) => !link.automated);
     if (otherLinks.length > 0) {
       lines.push("- **Kitos agentūros (patikrinkite ranka):**");

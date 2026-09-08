@@ -35,6 +35,7 @@ export const DEFAULT_WATCHLIST: WatchlistHotel[] = [
     stars: 4,
     guestRating: 9.0,
     searchKeyword: "Rose Garden Premium",
+    joinupHotelId: "82382",
     note: "Geriausias kokybės/kainos balansas — 9.0/10, nuo ~678 €/asm lapkritį",
   },
   {
@@ -46,6 +47,7 @@ export const DEFAULT_WATCHLIST: WatchlistHotel[] = [
     stars: 4,
     guestRating: 8.7,
     searchKeyword: "Ramada Resort Side",
+    joinupHotelId: "55828",
     note: "8.7/10 Booking, nuo ~678 €/asm ne sezonu (spalis–lapkritis)",
   },
   {
@@ -57,6 +59,7 @@ export const DEFAULT_WATCHLIST: WatchlistHotel[] = [
     stars: 4,
     guestRating: 8.3,
     searchKeyword: "Club Hotel Belpinar",
+    joinupHotelId: "35385",
     note: "TEZ nuo ~602 €/asm — dažnos akcijos, istoriškai iki ~300 €",
   },
   {
@@ -68,6 +71,7 @@ export const DEFAULT_WATCHLIST: WatchlistHotel[] = [
     stars: 4,
     guestRating: 8.0,
     searchKeyword: "Akdora Elite",
+    joinupHotelId: "55470",
     note: "Nuo ~678 €/asm lapkritį, geras kainos/kokybės variantas Alanijoje",
   },
   {
@@ -79,6 +83,7 @@ export const DEFAULT_WATCHLIST: WatchlistHotel[] = [
     stars: 5,
     guestRating: 8.6,
     searchKeyword: "Senza Grand Santana",
+    joinupHotelId: "34959",
     note: "5* UAI, 8.6/10 — brangesnis (~816 €), bet didesnis nuolaidų potencialas",
   },
 ];

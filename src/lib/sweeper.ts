@@ -1,4 +1,6 @@
 import { loadConfig } from "./config";
+import { resetItakaCache } from "./itaka-api";
+import { resetJoinupCache } from "./joinup-api";
 import { meetsQualityBar, buildHotelSummaries, pickBestDeal } from "./ranking";
 import { AUTOMATED_SOURCES } from "./sources";
 import { loadPriceHistory, saveDeals, savePriceHistory } from "./store";
@@ -12,6 +14,8 @@ function sleep(ms: number): Promise<void> {
 
 export async function runSweep(): Promise<ScanResult> {
   const config = await loadConfig();
+  resetItakaCache();
+  resetJoinupCache();
   const previousPrices = await loadPriceHistory();
   const allDeals: TravelDeal[] = [];
 

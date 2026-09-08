@@ -14,6 +14,8 @@ export interface WatchlistHotel {
   note: string;
   /** Paieškos raktinis žodis kitose agentūrose */
   searchKeyword?: string;
+  /** JoinUP vidinis viešbučio ID (jei žinomas) */
+  joinupHotelId?: string;
 }
 
 export interface SweeperConfig {
