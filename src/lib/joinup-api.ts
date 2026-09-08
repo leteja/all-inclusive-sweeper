@@ -112,7 +112,7 @@ export function resetJoinupCache(): void {
   cachedJoinupDates = null;
 }
 
-/** Tiesioginė nuoroda į JoinUP paieškos rezultatus su konkrečiu viešbučiu ir data */
+/** Tiesioginė nuoroda į JoinUP viešbučio puslapį su data ir kaina */
 export function buildJoinupOfferUrl(
   joinupHotelId: string,
   offer: JoinupOffer,
@@ -122,26 +122,21 @@ export function buildJoinupOfferUrl(
   const boardCode = offer.board?.code;
   const roomCode = offer.rooms?.[0]?.code;
   const date = offer.date_start;
-  const endDate = offer.date_end;
 
-  // /lt/tours su filtrais — patikimiausias būdas matyti konkretų pasiūlymą
-  const toursParams = new URLSearchParams({
+  const params = new URLSearchParams({
     origins: VILNIUS_ORIGIN,
     destinations: TURKEY_DESTINATION,
-    stays: String(stay),
+    stay: String(stay),
     pax_adl: String(adults),
-    hotel_ids: joinupHotelId,
-    dates: date,
+    date,
   });
-  if (boardCode) toursParams.set("board", boardCode);
-  if (endDate && endDate !== date) {
-    toursParams.set("date", `${date}:${endDate}`);
-  }
+  if (boardCode) params.set("board", boardCode);
+  if (roomCode) params.set("room", roomCode);
 
-  return `https://joinup.lt/lt/tours?${toursParams.toString()}`;
+  return `https://joinup.lt/lt/hotel/${joinupHotelId}?${params.toString()}`;
 }
 
-/** Bendra JoinUP nuoroda į viešbuį (be datos — compare links) */
+/** Bendra JoinUP nuoroda į viešbučio puslapį */
 export function buildJoinupHotelUrl(
   joinupHotelId: string,
   adults = 2,
@@ -150,11 +145,10 @@ export function buildJoinupHotelUrl(
   const params = new URLSearchParams({
     origins: VILNIUS_ORIGIN,
     destinations: TURKEY_DESTINATION,
-    stays: String(stay),
+    stay: String(stay),
     pax_adl: String(adults),
-    hotel_ids: joinupHotelId,
   });
-  return `https://joinup.lt/lt/tours?${params.toString()}`;
+  return `https://joinup.lt/lt/hotel/${joinupHotelId}?${params.toString()}`;
 }
 
 function buildJoinupDeal(
