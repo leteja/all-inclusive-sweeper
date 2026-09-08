@@ -627,7 +627,7 @@ function HotelSummaryCard({
                 className="inline-flex h-8 items-center gap-1 rounded-lg border px-3 text-sm hover:bg-muted"
               >
                 <ExternalLink className="h-4 w-4" />
-                Žiūrėti
+                {SOURCE_LABELS[deal.source] ?? "Žiūrėti"}
               </a>
             </>
           ) : (
@@ -708,7 +708,7 @@ function DealCard({
           className="inline-flex h-8 w-full items-center justify-center gap-2 rounded-lg border border-border bg-background px-2.5 text-sm font-medium hover:bg-muted"
         >
           <ExternalLink className="h-4 w-4" />
-          Peržiūrėti pasiūlymą
+          Peržiūrėti {SOURCE_LABELS[deal.source] ?? deal.source}
         </a>
       </CardContent>
     </Card>

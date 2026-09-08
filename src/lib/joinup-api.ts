@@ -27,8 +27,8 @@ interface JoinupOffer {
   date_start: string;
   date_end: string;
   stay?: { stay?: number };
-  board?: { name?: string; board_type?: string };
-  rooms?: Array<{ name?: string }>;
+  board?: { name?: string; board_type?: string; code?: string };
+  rooms?: Array<{ name?: string; code?: string }>;
   price?: {
     total_price?: { price?: string };
   };
@@ -112,6 +112,42 @@ export function resetJoinupCache(): void {
   cachedJoinupDates = null;
 }
 
+/** Tiesioginė nuoroda į konkretų JoinUP pasiūlymą (ne bendrą paiešką) */
+export function buildJoinupOfferUrl(
+  joinupHotelId: string,
+  offer: JoinupOffer,
+  adults: number
+): string {
+  const stay = offer.stay?.stay ?? 7;
+  const boardCode = offer.board?.code;
+  const roomCode = offer.rooms?.[0]?.code;
+  const date = offer.date_start;
+  const endDate = offer.date_end;
+
+  if (boardCode && roomCode) {
+    const params = new URLSearchParams({
+      origins: VILNIUS_ORIGIN,
+      destinations: TURKEY_DESTINATION,
+      stay: String(stay),
+      pax_adl: String(adults),
+      board: boardCode,
+      room: roomCode,
+      date,
+    });
+    return `https://joinup.lt/lt/hotel/${joinupHotelId}?${params.toString()}`;
+  }
+
+  const params = new URLSearchParams({
+    origins: VILNIUS_ORIGIN,
+    destinations: TURKEY_DESTINATION,
+    stay: String(stay),
+    pax_adl: String(adults),
+    hotel_ids: joinupHotelId,
+    date: `${date}:${endDate}`,
+  });
+  return `https://joinup.lt/lt/tours?${params.toString()}`;
+}
+
 function buildJoinupDeal(
   hotel: WatchlistHotel,
   joinupHotelId: string,
@@ -137,7 +173,7 @@ function buildJoinupDeal(
     resort: hotel.resort,
     country: "Turkija",
     hotelName: hotel.name,
-    hotelUrl: `https://joinup.lt/lt/search-tour?destination=turkey&query=${encodeURIComponent(hotelKeyword(hotel))}`,
+    hotelUrl: buildJoinupOfferUrl(joinupHotelId, offer, config.adults),
     board,
     roomType,
     totalPrice,

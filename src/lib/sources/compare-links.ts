@@ -40,7 +40,9 @@ export function getCompareLinks(hotel: WatchlistHotel): CompareLink[] {
     {
       sourceId: "joinup",
       name: "JoinUP",
-      url: `https://joinup.lt/lt/search-tour?destination=turkey&query=${qPlus}`,
+      url: hotel.joinupHotelId
+        ? `https://joinup.lt/lt/hotel/${hotel.joinupHotelId}?origins=2151&destinations=c_8&pax_adl=2`
+        : `https://joinup.lt/lt/search-tour?destination=turkey&query=${qPlus}`,
       automated: true,
     },
     {
