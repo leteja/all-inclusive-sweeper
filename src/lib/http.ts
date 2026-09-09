@@ -1,8 +1,15 @@
 const DEFAULT_UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
+export const FETCH_TIMEOUT_MS = 25_000;
+
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export function logProgress(message: string): void {
+  const time = new Date().toISOString().slice(11, 19);
+  console.log(`[${time}] ${message}`);
 }
 
 export async function fetchJson<T>(
@@ -16,6 +23,7 @@ export async function fetchJson<T>(
     try {
       const response = await fetch(url, {
         ...options,
+        signal: options.signal ?? AbortSignal.timeout(FETCH_TIMEOUT_MS),
         headers: {
           Accept: "application/json",
           "User-Agent": DEFAULT_UA,
@@ -25,7 +33,7 @@ export async function fetchJson<T>(
       });
 
       if (response.status === 429) {
-        await sleep(10000 * (attempt + 1));
+        await sleep(5000 * (attempt + 1));
         continue;
       }
 
@@ -39,7 +47,7 @@ export async function fetchJson<T>(
       };
 
       if (payload?.status === 429) {
-        await sleep(10000 * (attempt + 1));
+        await sleep(5000 * (attempt + 1));
         continue;
       }
 
@@ -61,6 +69,7 @@ export async function fetchText(
 ): Promise<string> {
   const response = await fetch(url, {
     ...options,
+    signal: options.signal ?? AbortSignal.timeout(FETCH_TIMEOUT_MS),
     headers: {
       Accept: "text/html,application/json",
       "User-Agent": DEFAULT_UA,

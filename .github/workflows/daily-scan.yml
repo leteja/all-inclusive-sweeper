@@ -16,6 +16,7 @@ permissions:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
 
@@ -27,8 +28,9 @@ jobs:
       - name: Įdiegti priklausomybes
         run: npm ci
 
-      - name: Tikrinti kainas (TEZ + kitų agentūrų nuorodos)
+      - name: Tikrinti kainas (TEZ + Itaka + JoinUP)
         run: npm run scan
+        timeout-minutes: 10
 
       - name: Išsaugoti rezultatus repozitorijoje
         run: |

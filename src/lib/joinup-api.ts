@@ -1,22 +1,25 @@
-import { fetchJson, sleep } from "./http";
+import { logProgress, sleep } from "./http";
 import { calculateValueScore, isInTargetRange } from "./ranking";
 import type { SweeperConfig, TravelDeal, WatchlistHotel } from "./types";
+
+const DEFAULT_UA =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
 const JOINUP_BASE = "https://joinup.lt/api/main";
 const JOINUP_REFERER = "https://joinup.lt/lt/tours";
 const TURKEY_DESTINATION = "c_8";
 const VILNIUS_ORIGIN = "2151";
-/** tour/offers ribojamas — kuo mažiau užklausų, tuo stabiliau */
-const REQUEST_DELAY_MS = 6000;
-const RATE_LIMIT_COOLDOWN_MS = 20000;
-const MAX_DATE_CHECKS = 3;
-const MAX_CONSECUTIVE_FAILURES = 2;
 
-const joinupFetchOptions: RequestInit = {
-  headers: { Referer: JOINUP_REFERER },
-};
+/** tour/offers ribojamas — minimalus skaičius užklausų */
+const REQUEST_DELAY_MS = 3000;
+const MAX_DATE_CHECKS = 2;
+const JOINUP_FETCH_TIMEOUT_MS = 20_000;
+
+/** Pilna kelionė su skrydžiu 2 asm. iš Vilniaus — žemesnė = tik viešbutis */
+const MIN_TRIP_TOTAL_EUR = 1000;
 
 let cachedJoinupDates: string[] | null = null;
+let joinupGloballyLimited = false;
 
 interface JoinupSearchResult {
   destinations?: Array<{
@@ -44,9 +47,6 @@ interface JoinupOffer {
   };
 }
 
-/** Pilna kelionė su skrydžiu 2 asm. iš Vilniaus — žemesnė = tik viešbutis */
-const MIN_TRIP_TOTAL_EUR = 1000;
-
 interface JoinupHotelOffersResult {
   tours?: Array<{
     hotel?: { id?: string; name?: string };
@@ -72,10 +72,6 @@ function namesMatch(candidate: string, target: string): boolean {
   return a.includes(b) || b.includes(a);
 }
 
-function formatJoinupDate(date: Date): string {
-  return date.toISOString().slice(0, 10);
-}
-
 function toDisplayDate(isoDate: string): string {
   const [year, month, day] = isoDate.split("-");
   return `${day}.${month}.${year}`;
@@ -97,11 +93,12 @@ export async function resolveJoinupHotelId(
   if (hotel.joinupHotelId) return hotel.joinupHotelId;
 
   const keyword = encodeURIComponent(hotelKeyword(hotel));
-  const payload = await fetchJson<JoinupSearchResult>(
+  const result = await fetchJoinupJson<JoinupSearchResult>(
     `${JOINUP_BASE}/search/search?query=${keyword}`
   );
+  if (!result.ok) return null;
 
-  const match = (payload.destinations ?? []).find(
+  const match = (result.data.destinations ?? []).find(
     (item) =>
       item.country?.id === TURKEY_DESTINATION &&
       item.hotel?.id &&
@@ -114,28 +111,63 @@ export async function resolveJoinupHotelId(
 
 async function getJoinupDates(): Promise<string[]> {
   if (cachedJoinupDates) return cachedJoinupDates;
-  const payload = await fetchJson<JoinupDatesResult>(
+  const result = await fetchJoinupJson<JoinupDatesResult>(
     `${JOINUP_BASE}/tour/dates?destinations=${TURKEY_DESTINATION}&origins=${VILNIUS_ORIGIN}`
   );
-  cachedJoinupDates = (payload.dates ?? []).map((item) => item.date);
+  if (!result.ok) return [];
+  cachedJoinupDates = (result.data.dates ?? []).map((item) => item.date);
   return cachedJoinupDates;
 }
 
 export function resetJoinupCache(): void {
   cachedJoinupDates = null;
+  joinupGloballyLimited = false;
 }
 
-async function fetchJoinupOffers(
-  url: string
-): Promise<JoinupHotelOffersResult | null> {
+export function isJoinupRateLimited(): boolean {
+  return joinupGloballyLimited;
+}
+
+type JoinupFetchResult<T> =
+  | { ok: true; data: T; rateLimited: false }
+  | { ok: false; data: T; rateLimited: boolean };
+
+/** Viena užklausa be retry — 429 = iškart sustabdyti JoinUP šiam skenavimui */
+async function fetchJoinupJson<T>(url: string): Promise<JoinupFetchResult<T>> {
+  const empty = {} as T;
+
   try {
-    return await fetchJson<JoinupHotelOffersResult>(
-      url,
-      joinupFetchOptions,
-      3
-    );
+    const response = await fetch(url, {
+      signal: AbortSignal.timeout(JOINUP_FETCH_TIMEOUT_MS),
+      headers: {
+        Accept: "application/json",
+        "User-Agent": DEFAULT_UA,
+        Referer: JOINUP_REFERER,
+      },
+    });
+
+    if (response.status === 429) {
+      joinupGloballyLimited = true;
+      return { ok: false, data: empty, rateLimited: true };
+    }
+
+    if (!response.ok) {
+      return { ok: false, data: empty, rateLimited: false };
+    }
+
+    const payload = (await response.json()) as T & {
+      error?: string;
+      status?: number;
+    };
+
+    if (payload?.status === 429) {
+      joinupGloballyLimited = true;
+      return { ok: false, data: empty, rateLimited: true };
+    }
+
+    return { ok: true, data: payload, rateLimited: false };
   } catch {
-    return null;
+    return { ok: false, data: empty, rateLimited: false };
   }
 }
 
@@ -191,15 +223,12 @@ function extractJoinupTripTotal(
 
   if (!total) return null;
 
-  // Kai API grąžina avansą vietoj pilnos kainos (retai, bet saugome)
   if (installment > 0 && total <= installment * 1.5) return null;
 
-  // per_pax_price kai naudojamas — perskaičiuojame į bendrą sumą
   if (perPax > 0 && total <= perPax * 1.5) {
     return Math.round(perPax * adults);
   }
 
-  // hotel/offers grąžina tik viešbučio kainą (< 800 € dviem) — atmesti
   if (total < MIN_TRIP_TOTAL_EUR) return null;
 
   return Math.round(total);
@@ -249,77 +278,75 @@ export async function searchJoinupDeals(
   config: SweeperConfig,
   hotel: WatchlistHotel
 ): Promise<TravelDeal[]> {
-  const joinupHotelId = await resolveJoinupHotelId(hotel);
-  if (!joinupHotelId) {
-    console.warn(`JoinUP: nerastas viešbutis „${hotel.name}“`);
+  if (joinupGloballyLimited) {
+    logProgress(`JoinUP: praleidžiama „${hotel.name}“ (API riboja)`);
     return [];
   }
+
+  const joinupHotelId = await resolveJoinupHotelId(hotel);
+  if (!joinupHotelId) {
+    logProgress(`JoinUP: nerastas viešbutis „${hotel.name}“`);
+    return [];
+  }
+
+  if (joinupGloballyLimited) return [];
 
   const today = new Date();
   const end = new Date(today);
   end.setDate(end.getDate() + config.dateRangeDays);
 
   const allDates = await getJoinupDates();
+  if (joinupGloballyLimited || allDates.length === 0) return [];
+
   const inRange = allDates.filter((date) => {
     const parsed = new Date(date);
     return parsed >= today && parsed <= end;
   });
   const dates = sampleDates(inRange, MAX_DATE_CHECKS);
-  // Tik 7 nakvynės — per pus mažiau užklausų, mažesnė 429 tikimybė
-  const stays = [config.nightsMin];
-
   const deals: TravelDeal[] = [];
-  let consecutiveFailures = 0;
+
+  logProgress(`JoinUP: „${hotel.name}“ — ${dates.length} datos`);
 
   for (const date of dates) {
-    if (consecutiveFailures >= MAX_CONSECUTIVE_FAILURES) {
-      console.warn(
-        `JoinUP: praleidžiamas „${hotel.name}“ — API riboja užklausas (429)`
+    if (joinupGloballyLimited) break;
+
+    const params = new URLSearchParams({
+      destinations: TURKEY_DESTINATION,
+      origins: VILNIUS_ORIGIN,
+      dates: date,
+      stays: String(config.nightsMin),
+      pax_adl: String(config.adults),
+      offer_type: "tour",
+      hotel_ids: joinupHotelId,
+    });
+
+    const result = await fetchJoinupJson<JoinupHotelOffersResult>(
+      `${JOINUP_BASE}/tour/offers?${params.toString()}`
+    );
+
+    if (result.rateLimited) {
+      logProgress(
+        `JoinUP: API riboja (429) — praleidžiami likę viešbučiai šiame skenavime`
       );
       break;
     }
 
-    for (const stay of stays) {
-      const params = new URLSearchParams({
-        destinations: TURKEY_DESTINATION,
-        origins: VILNIUS_ORIGIN,
-        dates: date,
-        stays: String(stay),
-        pax_adl: String(config.adults),
-        offer_type: "tour",
-        hotel_ids: joinupHotelId,
-      });
-
-      const payload = await fetchJoinupOffers(
-        `${JOINUP_BASE}/tour/offers?${params.toString()}`
-      );
-
-      if (!payload) {
-        consecutiveFailures++;
-        await sleep(RATE_LIMIT_COOLDOWN_MS);
-        continue;
-      }
-
-      consecutiveFailures = 0;
-
-      for (const tour of payload.tours ?? []) {
-        for (const offer of tour.offers ?? []) {
-          const deal = buildJoinupDeal(hotel, joinupHotelId, offer, config);
-          if (deal) deals.push(deal);
-        }
-      }
-
+    if (!result.ok) {
+      logProgress(`JoinUP: „${hotel.name}“ ${date} — užklausa nepavyko, tęsiama`);
       await sleep(REQUEST_DELAY_MS);
+      continue;
     }
+
+    for (const tour of result.data.tours ?? []) {
+      for (const offer of tour.offers ?? []) {
+        const deal = buildJoinupDeal(hotel, joinupHotelId, offer, config);
+        if (deal) deals.push(deal);
+      }
+    }
+
+    await sleep(REQUEST_DELAY_MS);
   }
 
-  const byId = new Map<string, TravelDeal>();
-  for (const deal of deals) {
-    const existing = byId.get(deal.id);
-    if (!existing || deal.totalPrice < existing.totalPrice) {
-      byId.set(deal.id, deal);
-    }
-  }
-
-  return [...byId.values()].sort((a, b) => a.pricePerPerson - b.pricePerPerson);
+  logProgress(`JoinUP: „${hotel.name}“ — rasta ${deals.length} pasiūlymų`);
+  return [...deals].sort((a, b) => a.pricePerPerson - b.pricePerPerson);
 }
