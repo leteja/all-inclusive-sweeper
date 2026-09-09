@@ -2,9 +2,16 @@ import { NextResponse } from "next/server";
 import { loadConfig, saveConfig } from "@/lib/config";
 import type { SweeperConfig } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
-  const config = await loadConfig();
-  return NextResponse.json(config);
+  try {
+    const config = await loadConfig();
+    return NextResponse.json(config);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Nežinoma klaida";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }
 
 export async function PUT(request: Request) {

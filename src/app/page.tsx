@@ -69,6 +69,22 @@ export default function HomePage() {
       fetch("/api/config"),
       fetch("/api/deals"),
     ]);
+
+    if (!configRes.ok) {
+      const body = await configRes.json().catch(() => ({}));
+      throw new Error(
+        (body as { error?: string }).error ??
+          `Nepavyko užkrauti nustatymų (${configRes.status})`
+      );
+    }
+    if (!dealsRes.ok) {
+      const body = await dealsRes.json().catch(() => ({}));
+      throw new Error(
+        (body as { error?: string }).error ??
+          `Nepavyko užkrauti kainų (${dealsRes.status})`
+      );
+    }
+
     const configData = (await configRes.json()) as SweeperConfig;
     const dealsData = await dealsRes.json();
     setConfig(configData);
@@ -81,9 +97,14 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    loadData().catch((err) =>
-      setError(err instanceof Error ? err.message : "Nepavyko užkrauti duomenų")
-    );
+    loadData().catch((err) => {
+      const message = err instanceof Error ? err.message : "Nepavyko užkrauti duomenų";
+      setError(
+        message === "Failed to fetch"
+          ? "Nepavyko prisijungti prie serverio. Patikrinkite ar svetainė paleista (npm run dev) arba ar Vercel deploy veikia."
+          : message
+      );
+    });
   }, [loadData]);
 
   const handleScan = async () => {
@@ -98,7 +119,12 @@ export default function HomePage() {
       setPriceDrops(data.priceDrops ?? []);
       await loadData();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Paieškos klaida");
+      const message = err instanceof Error ? err.message : "Paieškos klaida";
+      setError(
+        message === "Failed to fetch"
+          ? "Paieška nutrūko (serveris užtruko arba nepasiekiamas). Naudokite GitHub Actions „Kasdieninis kainų tikrinimas“ — rankinė paieška Vercel gali užtrukti per ilgai."
+          : message
+      );
     } finally {
       setScanning(false);
     }
@@ -206,12 +232,16 @@ export default function HomePage() {
         </Alert>
 
         <Alert className="border-amber-200 bg-amber-50 text-amber-950">
-          <AlertTitle>Kainos skiriasi tarp agentūrų</AlertTitle>
+          <AlertTitle>Kaip skaičiuojamos kainos</AlertTitle>
           <AlertDescription>
-            TEZ dažnai rodo <strong>brangesnes</strong> kainas (~600–800 €/asm).
-            <strong> JoinUP</strong> kainos su skrydžiu iš Vilniaus (ne tik
-            viešbutis). Anksčiau rodėme per žemą kainą — dabar naudojame pilnos
-            kelionės API.
+            Visos kainos rodomos <strong>už 1 asm.</strong> — pilna kelionė su
+            skrydžiu iš Vilniaus ({config.adults} asm. = maždaug{" "}
+            <strong>
+              {config.pricePerPersonMax * config.adults} €
+            </strong>{" "}
+            biudžetas, kai tikslas {config.pricePerPersonMax} €/asm). Tai{" "}
+            <strong>ne</strong> JoinUP 20% avansas. JoinUP svetainėje antra
+            suma (pvz. 254 €) — pradinė įmoka, ne kaina už asmens.
           </AlertDescription>
         </Alert>
 
@@ -541,7 +571,7 @@ function HotelSummaryCard({
           {(summary.sourcePrices ?? []).length > 0 && (
             <div className="mt-2 space-y-1">
               <p className="text-xs font-medium text-muted-foreground">
-                Kainos pagal agentūrą (mažiausia / asm.):
+                Kainos pagal agentūrą (€/asm., pilna kelionė):
               </p>
               <div className="flex flex-wrap gap-2">
                 {(summary.sourcePrices ?? []).map((item) => (
@@ -694,9 +724,13 @@ function DealCard({
             <p className="font-medium">{deal.board}</p>
           </div>
           <div>
-            <span className="text-muted-foreground">Viso</span>
+            <span className="text-muted-foreground">Viso ({deal.adults} asm.)</span>
             <p className="font-medium">
-              {deal.totalPrice} € ({deal.adults} asm.)
+              {deal.totalPrice} €
+              <span className="text-xs text-muted-foreground">
+                {" "}
+                ({deal.pricePerPerson} € × {deal.adults})
+              </span>
             </p>
           </div>
         </div>

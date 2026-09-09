@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "scan": "tsx scripts/scan.ts"
+    "scan": "tsx scripts/scan.ts",
+    "rescan-joinup": "tsx scripts/rescan-joinup.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

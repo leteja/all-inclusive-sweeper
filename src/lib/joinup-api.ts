@@ -37,8 +37,13 @@ interface JoinupOffer {
   rooms?: Array<{ name?: string; code?: string }>;
   price?: {
     total_price?: { price?: string };
+    installment_price?: { price?: string };
+    per_pax_price?: { price?: string } | null;
   };
 }
+
+/** Pilna kelionė su skrydžiu 2 asm. iš Vilniaus — žemesnė = tik viešbutis */
+const MIN_TRIP_TOTAL_EUR = 1000;
 
 interface JoinupHotelOffersResult {
   tours?: Array<{
@@ -159,13 +164,38 @@ export function buildJoinupHotelUrl(
   return `https://joinup.lt/lt/hotel/${joinupHotelId}?${params.toString()}`;
 }
 
+/** Pilna kelionės kaina — niekada avansas (20%) ar tik viešbučio kaina */
+function extractJoinupTripTotal(
+  offer: JoinupOffer,
+  adults: number
+): number | null {
+  const total = Number(offer.price?.total_price?.price ?? 0);
+  const installment = Number(offer.price?.installment_price?.price ?? 0);
+  const perPax = Number(offer.price?.per_pax_price?.price ?? 0);
+
+  if (!total) return null;
+
+  // Kai API grąžina avansą vietoj pilnos kainos (retai, bet saugome)
+  if (installment > 0 && total <= installment * 1.5) return null;
+
+  // per_pax_price kai naudojamas — perskaičiuojame į bendrą sumą
+  if (perPax > 0 && total <= perPax * 1.5) {
+    return Math.round(perPax * adults);
+  }
+
+  // hotel/offers grąžina tik viešbučio kainą (< 800 € dviem) — atmesti
+  if (total < MIN_TRIP_TOTAL_EUR) return null;
+
+  return Math.round(total);
+}
+
 function buildJoinupDeal(
   hotel: WatchlistHotel,
   joinupHotelId: string,
   offer: JoinupOffer,
   config: SweeperConfig
 ): TravelDeal | null {
-  const totalPrice = Number(offer.price?.total_price?.price ?? 0);
+  const totalPrice = extractJoinupTripTotal(offer, config.adults);
   if (!totalPrice) return null;
 
   const pricePerPerson = Math.round(totalPrice / config.adults);
