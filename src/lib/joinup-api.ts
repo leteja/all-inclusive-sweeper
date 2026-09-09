@@ -6,9 +6,11 @@ const JOINUP_BASE = "https://joinup.lt/api/main";
 const JOINUP_REFERER = "https://joinup.lt/lt/tours";
 const TURKEY_DESTINATION = "c_8";
 const VILNIUS_ORIGIN = "2151";
-/** Pilnos kelionės (su skrydžiu) kainos iš tour/offers — lėtesnis, bet teisingas */
-const REQUEST_DELAY_MS = 4000;
-const MAX_DATE_CHECKS = 5;
+/** tour/offers ribojamas — kuo mažiau užklausų, tuo stabiliau */
+const REQUEST_DELAY_MS = 6000;
+const RATE_LIMIT_COOLDOWN_MS = 20000;
+const MAX_DATE_CHECKS = 3;
+const MAX_CONSECUTIVE_FAILURES = 2;
 
 const joinupFetchOptions: RequestInit = {
   headers: { Referer: JOINUP_REFERER },
@@ -121,6 +123,20 @@ async function getJoinupDates(): Promise<string[]> {
 
 export function resetJoinupCache(): void {
   cachedJoinupDates = null;
+}
+
+async function fetchJoinupOffers(
+  url: string
+): Promise<JoinupHotelOffersResult | null> {
+  try {
+    return await fetchJson<JoinupHotelOffersResult>(
+      url,
+      joinupFetchOptions,
+      3
+    );
+  } catch {
+    return null;
+  }
 }
 
 /** Tiesioginė nuoroda į JoinUP viešbučio puslapį su data ir kaina */
@@ -249,13 +265,20 @@ export async function searchJoinupDeals(
     return parsed >= today && parsed <= end;
   });
   const dates = sampleDates(inRange, MAX_DATE_CHECKS);
-  const stays = [config.nightsMin, config.nightsMax].filter(
-    (value, index, array) => array.indexOf(value) === index
-  );
+  // Tik 7 nakvynės — per pus mažiau užklausų, mažesnė 429 tikimybė
+  const stays = [config.nightsMin];
 
   const deals: TravelDeal[] = [];
+  let consecutiveFailures = 0;
 
   for (const date of dates) {
+    if (consecutiveFailures >= MAX_CONSECUTIVE_FAILURES) {
+      console.warn(
+        `JoinUP: praleidžiamas „${hotel.name}“ — API riboja užklausas (429)`
+      );
+      break;
+    }
+
     for (const stay of stays) {
       const params = new URLSearchParams({
         destinations: TURKEY_DESTINATION,
@@ -267,21 +290,23 @@ export async function searchJoinupDeals(
         hotel_ids: joinupHotelId,
       });
 
-      try {
-        const payload = await fetchJson<JoinupHotelOffersResult>(
-          `${JOINUP_BASE}/tour/offers?${params.toString()}`,
-          joinupFetchOptions,
-          5
-        );
+      const payload = await fetchJoinupOffers(
+        `${JOINUP_BASE}/tour/offers?${params.toString()}`
+      );
 
-        for (const tour of payload.tours ?? []) {
-          for (const offer of tour.offers ?? []) {
-            const deal = buildJoinupDeal(hotel, joinupHotelId, offer, config);
-            if (deal) deals.push(deal);
-          }
+      if (!payload) {
+        consecutiveFailures++;
+        await sleep(RATE_LIMIT_COOLDOWN_MS);
+        continue;
+      }
+
+      consecutiveFailures = 0;
+
+      for (const tour of payload.tours ?? []) {
+        for (const offer of tour.offers ?? []) {
+          const deal = buildJoinupDeal(hotel, joinupHotelId, offer, config);
+          if (deal) deals.push(deal);
         }
-      } catch (error) {
-        console.error(`JoinUP klaida ${hotel.name} ${date}:`, error);
       }
 
       await sleep(REQUEST_DELAY_MS);

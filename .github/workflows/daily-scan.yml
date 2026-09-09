@@ -1,9 +1,6 @@
 name: Kasdieninis kainų tikrinimas
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     # 18:00 UTC ≈ 20:00 Vilnius (žiemos laikas), 21:00 (vasaros laikas)
     - cron: "0 18 * * *"

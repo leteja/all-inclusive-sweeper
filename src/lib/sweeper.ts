@@ -7,6 +7,7 @@ import { loadPriceHistory, saveDeals, savePriceHistory } from "./store";
 import type { ScanResult, TravelDeal } from "./types";
 
 const SOURCE_DELAY_MS = 400;
+const JOINUP_HOTEL_DELAY_MS = 8000;
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -36,7 +37,9 @@ export async function runSweep(): Promise<ScanResult> {
           error
         );
       }
-      await sleep(SOURCE_DELAY_MS);
+      const delay =
+        source.id === "joinup" ? JOINUP_HOTEL_DELAY_MS : SOURCE_DELAY_MS;
+      await sleep(delay);
     }
   }
 
