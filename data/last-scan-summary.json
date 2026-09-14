@@ -1,12 +1,12 @@
 {
-  "scannedAt": "2026-09-13T18:03:28.566Z",
+  "scannedAt": "2026-09-14T18:03:27.848Z",
   "hotelsScanned": 5,
   "sourcesScanned": [
     "TEZ Tour",
     "JoinUP",
     "Itaka"
   ],
-  "totalFound": 536,
+  "totalFound": 314,
   "hasAlerts": false,
   "pricePerPersonMax": 400,
   "bestDeal": {
