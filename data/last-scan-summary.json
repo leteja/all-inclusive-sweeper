@@ -1,17 +1,17 @@
 {
-  "scannedAt": "2026-09-23T18:03:48.600Z",
+  "scannedAt": "2026-09-24T20:53:45.040Z",
   "hotelsScanned": 5,
   "sourcesScanned": [
     "TEZ Tour",
     "JoinUP",
     "Itaka"
   ],
-  "totalFound": 137,
+  "totalFound": 24,
   "hasAlerts": false,
   "pricePerPersonMax": 400,
   "bestDeal": {
     "hotel": "ROSE GARDEN PREMIUM 4 *",
-    "pricePerPerson": 743,
+    "pricePerPerson": 740,
     "date": "03.11.2026",
     "url": "https://www.tez-tour.com/hotel.html?id=7003264"
   },
