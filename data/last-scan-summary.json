@@ -1,17 +1,35 @@
 {
-  "scannedAt": "2026-10-02T21:33:18.078Z",
+  "scannedAt": "2026-10-03T20:19:13.759Z",
   "hotelsScanned": 5,
   "sourcesScanned": [
     "TEZ Tour",
     "JoinUP",
     "Itaka"
   ],
-  "totalFound": 0,
+  "totalFound": 400,
   "hasAlerts": false,
   "pricePerPersonMax": 400,
-  "bestDeal": null,
+  "bestDeal": {
+    "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+    "pricePerPerson": 640,
+    "date": "21.10.2026",
+    "url": "https://www.tez-tour.com/hotel.html?id=4118481"
+  },
   "targetAlerts": [],
-  "priceDrops": [],
+  "priceDrops": [
+    {
+      "hotel": "Ramada Resort by Wyndham Side 4+",
+      "previousPrice": 678,
+      "newPrice": 640,
+      "dropAmount": 38
+    },
+    {
+      "hotel": "Senza Grand Santana 5*",
+      "previousPrice": 748,
+      "newPrice": 646,
+      "dropAmount": 102
+    }
+  ],
   "compareLinksByHotel": [
     {
       "hotel": "Rose Garden Premium 4*",
