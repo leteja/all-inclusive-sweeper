@@ -1,20 +1,15 @@
 {
-  "scannedAt": "2026-10-04T20:36:55.668Z",
+  "scannedAt": "2026-10-05T23:26:53.487Z",
   "hotelsScanned": 5,
   "sourcesScanned": [
     "TEZ Tour",
     "JoinUP",
     "Itaka"
   ],
-  "totalFound": 341,
+  "totalFound": 0,
   "hasAlerts": false,
   "pricePerPersonMax": 400,
-  "bestDeal": {
-    "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
-    "pricePerPerson": 640,
-    "date": "21.10.2026",
-    "url": "https://www.tez-tour.com/hotel.html?id=4118481"
-  },
+  "bestDeal": null,
   "targetAlerts": [],
   "priceDrops": [],
   "compareLinksByHotel": [
