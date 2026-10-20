@@ -1,17 +1,29 @@
 {
-  "scannedAt": "2026-10-19T21:49:47.218Z",
+  "scannedAt": "2026-10-20T20:59:03.653Z",
   "hotelsScanned": 5,
   "sourcesScanned": [
     "TEZ Tour",
     "JoinUP",
     "Itaka"
   ],
-  "totalFound": 0,
+  "totalFound": 82,
   "hasAlerts": false,
   "pricePerPersonMax": 400,
-  "bestDeal": null,
+  "bestDeal": {
+    "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+    "pricePerPerson": 473,
+    "date": "27.10.2026",
+    "url": "https://www.tez-tour.com/hotel.html?id=4118481"
+  },
   "targetAlerts": [],
-  "priceDrops": [],
+  "priceDrops": [
+    {
+      "hotel": "Rose Garden Premium 4*",
+      "previousPrice": 632,
+      "newPrice": 599,
+      "dropAmount": 33
+    }
+  ],
   "compareLinksByHotel": [
     {
       "hotel": "Rose Garden Premium 4*",
