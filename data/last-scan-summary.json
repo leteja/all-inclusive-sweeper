@@ -1,27 +1,1168 @@
 {
-  "scannedAt": "2026-10-23T20:45:36.960Z",
+  "scannedAt": "2026-10-24T19:56:41.202Z",
   "hotelsScanned": 5,
   "sourcesScanned": [
     "TEZ Tour",
     "JoinUP",
     "Itaka"
   ],
-  "totalFound": 106,
-  "hasAlerts": false,
+  "totalFound": 78,
+  "hasAlerts": true,
   "pricePerPersonMax": 400,
   "bestDeal": {
-    "hotel": "ROSE GARDEN PREMIUM 4 *",
-    "pricePerPerson": 502,
-    "date": "01.11.2026",
-    "url": "https://www.tez-tour.com/hotel.html?id=7003264"
+    "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+    "pricePerPerson": 301,
+    "date": "27.10.2026",
+    "url": "https://www.tez-tour.com/hotel.html?id=4118481"
   },
-  "targetAlerts": [],
+  "targetAlerts": [
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 301,
+      "date": "27.10.2026",
+      "nights": 7,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 309,
+      "date": "27.10.2026",
+      "nights": 7,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 321,
+      "date": "27.10.2026",
+      "nights": 7,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 327,
+      "date": "27.10.2026",
+      "nights": 8,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 336,
+      "date": "27.10.2026",
+      "nights": 8,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 337,
+      "date": "27.10.2026",
+      "nights": 7,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 344,
+      "date": "27.10.2026",
+      "nights": 7,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 349,
+      "date": "27.10.2026",
+      "nights": 8,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 353,
+      "date": "27.10.2026",
+      "nights": 9,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 357,
+      "date": "28.10.2026",
+      "nights": 7,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 363,
+      "date": "27.10.2026",
+      "nights": 9,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 365,
+      "date": "28.10.2026",
+      "nights": 7,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 367,
+      "date": "27.10.2026",
+      "nights": 8,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 376,
+      "date": "27.10.2026",
+      "nights": 8,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 377,
+      "date": "28.10.2026",
+      "nights": 7,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 378,
+      "date": "27.10.2026",
+      "nights": 9,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 393,
+      "date": "28.10.2026",
+      "nights": 7,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 398,
+      "date": "27.10.2026",
+      "nights": 9,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    },
+    {
+      "hotel": "RAMADA RESORT BY WYNDHAM SIDE 4+ *",
+      "pricePerPerson": 400,
+      "date": "28.10.2026",
+      "nights": 7,
+      "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+      "source": "tez-tour",
+      "compareLinks": [
+        {
+          "name": "TEZ Tour",
+          "url": "https://www.tez-tour.com/hotel.html?id=4118481",
+          "automated": true
+        },
+        {
+          "name": "TEZ Išpardavimas",
+          "url": "https://ispardavimas.teztour.lt/",
+          "automated": false
+        },
+        {
+          "name": "Novaturas",
+          "url": "https://www.novaturas.lt/country/TR?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "West Express",
+          "url": "https://www.westexpress.lt/keliones/poilsines-keliones-i-turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "JoinUP",
+          "url": "https://joinup.lt/lt/hotel/55828?origins=2151&destinations=c_8&stay=7&pax_adl=2&offer_type=tour",
+          "automated": true
+        },
+        {
+          "name": "Coral Travel",
+          "url": "https://www.coraltravel.lt/keliones/poilsines-keliones/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Anex Tour",
+          "url": "https://www.anextour.lt/lt/search?query=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Itaka",
+          "url": "https://www.itaka.lt/paieska?q=Ramada%20Resort%20Side",
+          "automated": true
+        },
+        {
+          "name": "Pasirink Sparnus",
+          "url": "https://www.pasirinksparnus.lt/keliones/islaidu/turkija?search=Ramada%20Resort%20Side",
+          "automated": false
+        },
+        {
+          "name": "Kelionių Panorama",
+          "url": "https://www.kelioniupanorama.lt/keliones/turkija/?search=Ramada%20Resort%20Side",
+          "automated": false
+        }
+      ]
+    }
+  ],
   "priceDrops": [
     {
-      "hotel": "Rose Garden Premium 4*",
-      "previousPrice": 537,
-      "newPrice": 502,
-      "dropAmount": 35
+      "hotel": "Ramada Resort by Wyndham Side 4+",
+      "previousPrice": 373,
+      "newPrice": 301,
+      "dropAmount": 72
     }
   ],
   "compareLinksByHotel": [
