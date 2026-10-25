@@ -1,12 +1,12 @@
 {
-  "scannedAt": "2026-10-24T19:56:41.202Z",
+  "scannedAt": "2026-10-25T20:07:14.970Z",
   "hotelsScanned": 5,
   "sourcesScanned": [
     "TEZ Tour",
     "JoinUP",
     "Itaka"
   ],
-  "totalFound": 78,
+  "totalFound": 68,
   "hasAlerts": true,
   "pricePerPersonMax": 400,
   "bestDeal": {
@@ -1157,14 +1157,7 @@
       ]
     }
   ],
-  "priceDrops": [
-    {
-      "hotel": "Ramada Resort by Wyndham Side 4+",
-      "previousPrice": 373,
-      "newPrice": 301,
-      "dropAmount": 72
-    }
-  ],
+  "priceDrops": [],
   "compareLinksByHotel": [
     {
       "hotel": "Rose Garden Premium 4*",
